@@ -22,14 +22,14 @@ class File
 
     public function require($filename)
     {
-        $filename = str_replace("/",self::DS,$filename);
-        if(file_exists($filename))
+
+        if(file_exists($this->toFile($filename)))
         {
-            require $filename;
+          return  require $this->toFile($filename);
         }
         else
         {
-            echo "soory no file found $filename";
+            echo "soory no file found $filename"."<br>";
         }
     }
 
@@ -42,6 +42,12 @@ class File
     public function toPublic($filename)
     {
         $filename = "Public".self::DS.$filename.".php";
+        $filename = str_replace("/",self::DS,$filename);
+        return $this->dir().self::DS.$filename;
+    }
+    public function toPublicWithoutExtension($filename)
+    {
+        $filename = "Public".self::DS.$filename;
         $filename = str_replace("/",self::DS,$filename);
         return $this->dir().self::DS.$filename;
     }

@@ -5,6 +5,7 @@ class Route
 {
     private $app;
     private $routes = [];
+    private $method;
 
     public function __construct(Application $app)
     {
@@ -87,6 +88,7 @@ class Route
             if($this->matchUrl($route['pattern']))
             {  
                 
+                $this->method = $route['method'];
                 $args = $this->getArgs($route['pattern']);
                 list($controller , $action)  = explode("@",$route['action']);
 
@@ -96,6 +98,11 @@ class Route
         
 
 
+    }
+
+    public function isMatchedMethod()
+    {
+        return $this->method === $this->app->request->server("REQUEST_METHOD");
     }
 
 

@@ -36,22 +36,23 @@ class Application
     public function loadClasses($class)
     {
 
+
         if(strpos($class,"App") === 0)
         {
-          $file =  $this->file->toFile($class);
+            if(file_exists($this->file->toFile($class)))
+            {
+                $this->file->require($class);
+            }
+            else
+            {
+                $this->url->header("notfound");
+            }
+    
         }
         elseif(strpos($class,"System") === 0)
         {
-            $file = $this->file->toVendor($class);
+            $this->file->require("Vendor\\$class");
             
-        }
-        if(file_exists($file))
-        {
-            $this->file->require($file);
-        }
-        else
-        {
-            $this->url->header("notfound");
         }
 
 
@@ -65,6 +66,7 @@ class Application
     
     public function getObject($name)
     {
+
         if(! $this->isShare($name))
         {
             if($this->isCoreClasses($name))
@@ -73,7 +75,7 @@ class Application
             }
             else
             {
-                echo "sorry this $name is not found ";
+                echo "sorry this $name class is not found ";
             }
 
         }
@@ -88,7 +90,10 @@ class Application
     {
       if($value instanceof Closure)
       {
-        call_user_func($value , $this);
+        
+        $value = call_user_func($value , $this);
+         
+        
       }
       $this->container[$key] = $value;
     }
@@ -103,11 +108,11 @@ class Application
             "route"  => "System\\Route", // done
             "load" => "System\\Loader",  // done
             "view"   => "System\\View\\ViewFactory", //done
-            "db"    =>  "System\\DataBase",
+            "db"    =>  "System\\DataBase", // done
             "cookie" => "System\\Cookie", //done
             "html"   => "System\\Html", // done
             "url"     => "System\\Url", //done
-            "validator"  => "System\\Validation", 
+            "validator"  => "System\\Validator", // done
             "pagination"  => "System\\Pagination"
 
         ];
@@ -126,14 +131,14 @@ class Application
     }
     public function getHelperFile()
     {
-        return $this->file->require($this->file->toVendor("helper"));
+        return $this->file->require("Vendor\\helper");
     }
 
     public function run()
     {
         $this->session->start();
         $this->request->prepareUrl();
-        $this->file->require($this->file->toFile("App/index"));
+        $this->file->require("App/index");
         list($controller , $action , $args) = $this->route->isMatch();
         $output = (string) $this->load->action($controller,$action,$args);
        

@@ -62,3 +62,22 @@ if(! function_exists("array_get_value"))
         }
     }
 }
+if(! function_exists("toPublicDirectory"))
+{
+    function toPublicDirectory($path)
+    {
+        global $app;
+        $dir = $app->file->toPublicWithoutExtension($path);
+        return $dir;
+    }
+}
+if(! function_exists("toLink"))
+{
+    function toLink($path)
+    {
+        global $app;
+        $path = strtolower($path);
+        $dir = $app->url->link($path);
+        return $dir;
+    }
+}

@@ -1,11 +1,13 @@
 <?php
 namespace System\Http;
 use System\Application;
+use System\Http\UploadFile;
 class Request 
 {
     private $app;
     private $url;
     private $baseurl;
+    private $file = [];
     public function __construct(Application $app)
     {
        $this->app = $app;
@@ -51,5 +53,16 @@ class Request
     public function method($key,$default=null)
     {
       return array_get_value($_POST,$key,$default);
+    }
+
+    public function file($input)
+    {
+        if(array_key_exists($input,$this->file))
+        {
+            return $this->file[$input];
+        }
+
+        $this->file[$input] = new UploadFile($input);
+        return $this->file[$input];
     }
 }

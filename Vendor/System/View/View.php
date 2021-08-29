@@ -4,7 +4,7 @@ use System\Application;
 class View 
 {
     private $pathview;
-    private $data = [];
+    public $data = [];
     private $app;
     private $output;
     public function __construct(Application $app, $path , $data)
@@ -31,8 +31,8 @@ class View
 
         if(is_null($this->output))
         {
-            ob_flush();
-            extract($this->data);
+           ob_start();
+           extract($this->data); 
            if(file_exists($this->pathview))
            {
             require $this->pathview;
