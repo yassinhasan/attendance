@@ -51,7 +51,7 @@ class Application
         }
         elseif(strpos($class,"System") === 0)
         {
-            $this->file->require("Vendor\\$class");
+            $this->file->require("Config\\$class");
             
         }
 
@@ -131,7 +131,7 @@ class Application
     }
     public function getHelperFile()
     {
-        return $this->file->require("Vendor\\helper");
+        return $this->file->require("Config\\System\\helper");
     }
 
     public function run()

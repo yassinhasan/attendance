@@ -33,9 +33,9 @@ class File
         }
     }
 
-    public function toVendor($filename)
+    public function toConfig($filename)
     {
-       $filename = "Vendor".self::DS.$filename.".php";
+       $filename = "Config".self::DS.$filename.".php";
        $filename = str_replace("/",self::DS,$filename);
        return $this->dir().self::DS.$filename;
     }

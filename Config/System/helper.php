@@ -9,7 +9,7 @@
 
 
     $app->file->toFile($file)  == __dir__ + file;
-    $app->file->toVendor($file)  == __dir__.vendor +  $FILE;
+    $app->file->toConfig($file)  == __dir__.Config +  $FILE;
     $app->file->toPublic($file)  == __dir__.public +  $FILE;
 
 
