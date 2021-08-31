@@ -8,6 +8,8 @@ class Html
     private $descrpition;
     private $keywords;
     private $breadcrumb;
+    private $css = []; 
+    private $js = []; 
 
 
     public function __construct(Application $app)
@@ -23,6 +25,24 @@ class Html
     public function getTitle()
     {
         return $this->title;
+    }
+    public function setCss($css)
+    {
+        $this->css[] = $css;
+    }
+
+    public function getCss()
+    {
+        return $this->css;
+    }
+    public function setJS($js)
+    {
+        $this->js[] = $js;
+    }
+
+    public function getJs()
+    {
+        return $this->js;
     }
     public function setBreadcrumb($breadcrumb)
     {

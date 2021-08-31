@@ -81,3 +81,21 @@ if(! function_exists("toLink"))
         return $dir;
     }
 }
+if(! function_exists("assets"))
+{
+    function assets($path)
+    {
+        global $app;
+        $path = strtolower($path);
+        $dir = $app->url->link("Public/".$path);
+        return $dir;
+    }
+}
+if(! function_exists("_e"))
+{
+    function _e($value)
+    {
+
+        return htmlentities($value);
+    }
+}

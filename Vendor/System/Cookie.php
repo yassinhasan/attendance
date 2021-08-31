@@ -12,7 +12,7 @@ class Cookie
     public function setCookie($key,$value , $time)
     {
         $time = $time === -1 ? -1 : (time() + 3600 * $time) ;
-        setcookie($key , $value  , $time , "/" , $this->getDomainPath() , false , true);
+        setcookie($key , $value  , $time , "/" , "" , false , true);
     }
     public function get($key)
     {
@@ -29,7 +29,7 @@ class Cookie
     {
         if($this->has($key))
         {
-          $this->setCookie($key,$value = null , -1);
+           $this->setCookie($key,null , -1);
         }
         if(isset($_COOKIE[$key]))
         {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Users;
 
 use System\Controller;
 
@@ -8,7 +8,8 @@ class HomeController extends Controller
 
     public function index()
     {
-     echo  $this->app->view->render("home");
+        $this->app->html->setTitle("Home Page");
+        echo  $this->app->layout->render($this->app->view->render("users\home"));
     }
 
     public function submit()

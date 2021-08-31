@@ -152,7 +152,7 @@ class DataBase
        try {
         $stmt = static::$connection->prepare($sql);
         foreach($bindings  as  $key => $value){
-            $stmt->bindValue( $key+1 , $value); 
+            $stmt->bindValue( $key+1 , _e($value)); 
         }
         $stmt->execute();
         $this->reset();

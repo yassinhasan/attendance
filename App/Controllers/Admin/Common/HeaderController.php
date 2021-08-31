@@ -8,6 +8,9 @@ class HeaderController extends Controller
     public function index()
     {
 
-      return  $this->app->view->render("admin\common\header");
+      $data['title'] =  $this->html->getTitle("admin");
+      $data['css'] =  $this->html->getCss("css");
+      $data['js'] =  $this->html->getJs("js");
+      return  $this->view->render("admin\common\header",$data);
     }
 }

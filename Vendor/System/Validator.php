@@ -81,11 +81,11 @@ class Validator
             }
 
         }
-        else
-        {
-            $image->move();
-            $this->file_saved_name_in_db = $image->fileSavedNameInDb();
-        }
+        // else
+        // {
+        //     $image->move();
+        //     $this->file_saved_name_in_db = $image->fileSavedNameInDb();
+        // }
         return $this;    
     }
 

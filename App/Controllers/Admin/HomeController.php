@@ -8,8 +8,8 @@ class HomeController extends Controller
 
     public function index()
     {
-
-      echo  $this->app->layout->render($this->app->view->render("admin\content"));
+      $this->html->setTitle("admin");
+      echo  $this->layout->render($this->view->render("admin\home"));
     }
 
 }
