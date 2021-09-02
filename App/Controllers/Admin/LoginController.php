@@ -20,6 +20,7 @@ class LoginController extends Controller
         $data['action'] = toLink("admin/login/submit");
         echo  $this->layout->render($this->view->render("admin\login",$data));
     }
+
     public function submit()
     {
         $this->isValid();
@@ -33,6 +34,7 @@ class LoginController extends Controller
         $valid =  (bool) $this->validator
                         ->require("email")
                         ->email("email")
+                        ->isVerified(["email","users" , "verified" , 0])
                         ->require("password")
                         ->valid();            
         if($valid == false)
@@ -64,7 +66,7 @@ class LoginController extends Controller
             }
             else
             {
-                $this->json['error'] = 'invalid data';   
+                $this->json['invalid'] = 'invalid data';   
             }
 
         }                

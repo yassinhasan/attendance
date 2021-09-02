@@ -111,7 +111,6 @@ class Validator
         elseif(count($table) == 4)
         {
             // select $cloumn from tablename where $cloumn = figo78a@gmail.com and excpetion != exveptionvalue  $table = ['email' , 'users' , 'id' , 4]
-
             list($coulmn , $table_name , $exception , $exceptionvalue) = $table;
             if($inputvalue !== "" or $inputvalue != null)
             {
@@ -123,6 +122,36 @@ class Validator
         if($result != null)
         {
             $message = $message !== null ? $message : sprintf("sorry  %s is exists ",$coulmn);
+            $this->message($coulmn,$message);
+        }
+
+        return $this;
+    }
+
+    public function isVerified(array $table ,$message = null)
+    {
+        // select email from column where tablename = figo78a@gmail.com and excpetion != exveptionvalue
+
+        $inputvalue = $this->getValue($table[0]);
+        if($this->hasEroor($table[0]))
+        {
+            return $this;
+        }
+        if(count($table) == 4)
+        {
+            // select $cloumn from tablename where $cloumn = figo78a@gmail.com and excpetion != exveptionvalue  $table = ['email' , 'users' , 'id' , 4]
+
+            list($coulmn , $table_name , $exception , $exceptionvalue) = $table;
+            if($inputvalue !== "" or $inputvalue != null)
+            {
+                $result = $this->app->db->select($coulmn)->from($table_name)->where("$coulmn = ?  AND $exception = ? ", $inputvalue  , $exceptionvalue)->fetch();
+            }
+        }
+
+
+        if($result != null)
+        {
+            $message = $message !== null ? $message : sprintf("sorry  %s is already signed up but need to verify account by email ",$coulmn);
             $this->message($coulmn,$message);
         }
 

@@ -13,7 +13,7 @@ class LoginModel extends Model
         public function checkValidLoginUser($email , $password)
         {
             $user = $this->select('*')
-                         ->where( 'email = ? ',$email)->fetch($this->table_name);                
+                         ->where( 'email = ? AND verified = ? ',$email , 1)->fetch($this->table_name);                
 
             if($user)
             {

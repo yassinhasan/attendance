@@ -23,10 +23,16 @@ class SignupController extends Controller
         }
         else
         {
+            
             $usermodel = $this->load->model("users");
             if($usermodel->insert())
             {
-                $this->json['suc'] = 'user registred successfully';
+                $this->json['suc'] =  'We Send Email For Verfiication ';
+                if($usermodel->isSentEmail())
+                {
+                $this->json['redirect'] = toLink("admin/login");                    
+                }
+
             
             }else
             {
@@ -44,7 +50,8 @@ class SignupController extends Controller
                         ->require("lastname")
                         ->require("email")
                         ->email("email")
-                        ->exists(["email","users"])
+                        ->exists(["email","users" , "verified" , 0])
+                        ->isVerified(["email","users" , "verified" , 0])
                         ->require("password")
                         ->image("image")
                         ->valid();

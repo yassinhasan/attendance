@@ -1,0 +1,21 @@
+
+body{
+    min-height: 100vh;
+    background-color: #82b6ea;
+}
+
+
+.loadinsuccess
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: none;
+}
+
+.loadinsuccess.active 
+{
+    display: block;
+}

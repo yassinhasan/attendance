@@ -15,6 +15,7 @@ class Application
         static::$instance = $this;
         $this->autoload();
         $this->getHelperFile();
+        $this->getVendorAutoload();
     }
 
 
@@ -45,7 +46,7 @@ class Application
             }
             else
             {
-                $this->url->header("notfound");
+               // $this->url->header("notfound");
             }
     
         }
@@ -131,7 +132,12 @@ class Application
     }
     public function getHelperFile()
     {
-        return $this->file->require("Config\\System\\helper");
+         $this->file->require("Config\\System\\helper");
+         $this->file->require("Config\\System\\Mail");
+    }
+    public function getVendorAutoload()
+    {
+        return $this->file->require("Vendor\\autoload");
     }
 
     public function run()
