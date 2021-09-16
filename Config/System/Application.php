@@ -16,6 +16,7 @@ class Application
         $this->autoload();
         $this->getHelperFile();
         $this->getVendorAutoload();
+        $this->smartError();
     }
 
 
@@ -150,6 +151,12 @@ class Application
        
         $this->response->setOutput($output);
         $this->response->send();
+    }
+    public function smartError()
+    {
+        $whoops = new \Whoops\Run;
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+        $whoops->register();
     }
     
 

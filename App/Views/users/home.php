@@ -2,8 +2,6 @@
 
 <a href="<?= toLink("users/login") ?>"> login page </a>
 
-
-
 <a href="<?= toLink("users/logout") ?>"> logout  </a>
 
 

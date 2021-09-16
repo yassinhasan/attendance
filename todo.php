@@ -1,4 +1,7 @@
 <?php
+
+// TODO: في حاله الادخال لو فيه صلاحيه موجوده قبل كده مدخلهاش تجاهلها
+// TODO: FETCH BY PAGES 
 // TODO: group permesion 
 // TODO:  add page of group permesion // model // controller // data base 
 // TODO: foregt password

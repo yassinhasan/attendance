@@ -10,6 +10,7 @@ class Html
     private $breadcrumb;
     private $css = []; 
     private $js = []; 
+    private $cdn = [];
 
 
     public function __construct(Application $app)
@@ -28,16 +29,31 @@ class Html
     }
     public function setCss($css)
     {
-        $this->css[] = $css;
+        $this->css = $css;
     }
 
     public function getCss()
     {
         return $this->css;
     }
-    public function setJS($js)
+    public function setCdn($key,$cdn)
     {
-        $this->js[] = $js;
+        $this->cdn[$key] = $cdn;
+    }
+
+    public function getCdn($key)
+    {
+        if(array_key_exists($key,$this->cdn))
+        {
+            return $this->cdn[$key];
+        }else
+        {
+            return '';
+        }
+    }
+    public function setJS( $js)
+    {
+        $this->js = $js;
     }
 
     public function getJs()

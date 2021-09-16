@@ -7,11 +7,24 @@ class SignupController extends Controller
 {
     public function index()
     {
-        $this->html->setTitle("Signup");
-        $this->html->setCss("admin/css/signup");
-        $this->html->setJs("admin/js/signup");
+
+        $this->html->setCss([
+            "admin/css/all.min.css",
+            "admin/css/bootstrap.css.map",
+            "admin/css/bootstrap.min.css",
+            "admin/css/fontawesome.min.css",
+            "admin/css/signup.css",
+          ]);  
+          $this->html->setJs([
+            "admin/js/jquery.min.js",
+            "admin/js/jquery.min.js",
+            "admin/js/bootstrap.min.js",
+            "admin/js/all.min.js",
+            "admin/js/fontawesome.min.js",
+            "admin/js/signup.js"
+          ]);
         $data['action'] = toLink("admin/signup/submit");
-        echo  $this->layout->render($this->view->render("admin\signup",$data));
+        echo  $this->layout->render($this->view->render("admin\signup",$data) , "nav");
     }
 
     public function submit()

@@ -68,6 +68,7 @@ if(! function_exists("toPublicDirectory"))
     {
         global $app;
         $dir = $app->file->toPublicWithoutExtension($path);
+        $dir = str_replace("\\","/",$dir);
         return $dir;
     }
 }

@@ -8,7 +8,7 @@ class LoginModel extends Model
     {
         use Filter;
         private $user;
-        private $table_name = "users";
+        protected $table_name = "users";
         
         public function checkValidLoginUser($email , $password)
         {

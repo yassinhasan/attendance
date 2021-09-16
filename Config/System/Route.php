@@ -59,6 +59,22 @@ class Route
         return $this->routes;
     }
 
+    public function allRoutesUrl()
+    {
+        if(! empty($this->routes()))
+        {
+            $allurl = [];
+            foreach($this->routes as $route)
+            {
+                $allurl[] =  $route['url'];
+            } 
+            return $allurl;          
+        }else
+        {
+            echo "sorry no routes founds";
+        }
+
+    }
 
 
     public function matchUrl($pattern)
@@ -68,14 +84,10 @@ class Route
 
     public function getArgs($pattern)
     {
-        $args = [];
-        preg_match_all($pattern , $this->app->request->url() , $matches);
+        
+        preg_match_all($pattern , $this->app->request->url() , $matches);;
         array_shift($matches);
-        if(!empty($matches)){
-            $args = array_merge($matches[0] , $matches[1]);
-           
-       }
-       $args = array_filter($args,"filterstring");
+        $args = !isset($matches[0]) ? $matches : $matches[0];
         return $args;
   
     }

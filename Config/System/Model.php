@@ -6,6 +6,7 @@ abstract class Model
 {
     use Filter;
     protected $app;
+    protected $table_name;
     public function __construct(Application $app)
     {
         $this->app = $app;
@@ -20,6 +21,12 @@ abstract class Model
     public function __get($name)
     {
         return $this->app->getObject($name);
+    }
+    public function getAll()
+    {
+        $results = 
+        $this->fetchAll($this->table_name);
+        return $results;
     }
 
     

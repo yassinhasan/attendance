@@ -26,18 +26,30 @@ $app->route->addRoute("/","Users/Home");
 
 $app->route->addRoute("admin","Admin/Home");
    // admin ==> login page
-   $app->route->addRoute("admin/login","Admin/Login");
-   $app->route->addRoute("admin/login/submit","Admin/Login@submit");
+   $app->route->addRoute("admin/login","Admin/Login" , "POST");
+   $app->route->addRoute("admin/login/submit","Admin/Login@submit" ,"POST");
    // admin ==> signup page
-   $app->route->addRoute("admin/signup","Admin/Signup");
-   $app->route->addRoute("admin/signup/submit","Admin/Signup@submit");
+   $app->route->addRoute("admin/signup","Admin/Signup" , "POST");
+   $app->route->addRoute("admin/signup/submit","Admin/Signup@submit" , "POST");
    // admin ==> logour
-   $app->route->addRoute("admin/logout","Admin/Logout");
+   $app->route->addRoute("admin/logout","Admin/Logout" , "POST");
 
    // verify http://www.attendance.com/admin/verify?email=marwamedhat87@gmail.com&code=89f549b2a5341a05a7e4afeb364599158a03a47f61301c097f
 
       $app->route->addRoute("admin/verify","Admin/Verify" , "GET");   
-      $app->route->addRoute("admin/verify/submit","Admin/Verify@submit" , "GET");   
+      $app->route->addRoute("admin/verify/submit","Admin/Verify@submit" , "GET");  
+      
+   // user groups
+
+   $app->route->addRoute("admin/usersgroups","Admin/Usersgroups");
+   $app->route->addRoute("admin/usersgroups/submit","Admin/Usersgroups@submit");
+   $app->route->addRoute("admin/usersgroups/edit/:id","Admin/Usersgroups@edit","POST");
+   $app->route->addRoute("admin/usersgroups/save/:id","Admin/Usersgroups@save","POST");
+   $app->route->addRoute("admin/usersgroups/delete/:id","Admin/Usersgroups@delete","POST");
+   $app->route->addRoute("admin/usersgroups/realtime","Admin/Usersgroups@realtime" , "POST");
+   $app->route->addRoute("admin/usersgroups/search","Admin/Usersgroups@search" , "POST");
+   $app->route->addRoute("admin/usersgroups/download","Admin/Usersgroups@download" , "POST");
+
    
 
 
@@ -54,5 +66,9 @@ $app->route->addRoute("notfound","NotFound");
 $app->addInContainer("layout",function($app)
 {
    return $app->load->controller("Admin\Layout");
+});
+
+$app->addInContainer("userslayout",function($app){
+      return $app->load->controller("Users\Layout");  
 });
 

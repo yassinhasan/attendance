@@ -9,8 +9,9 @@ class HeaderController extends Controller
     {
 
       $data['title'] =  $this->html->getTitle("admin");
-      $data['css'] =  $this->html->getCss("css");
-      $data['js'] =  $this->html->getJs("js");
+      $data['css'] =  $this->html->getCss();
+      $data['js'] =  $this->html->getJs();
+      $data['favicon'] = $this->html->getCdn('favicon');
       return  $this->view->render("admin\common\header",$data);
     }
 }

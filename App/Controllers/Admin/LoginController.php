@@ -12,17 +12,31 @@ class LoginController extends Controller
         {
             $this->url->header("admin");
         }
-        $this->html->setTitle("login");
-        $this->html->setCss("admin/css/login");
-        $this->html->setCss("admin/css/style");
-        $this->html->setJs("admin/js/login");
-        $this->html->setJs("admin/js/main");
+              // all css 
+
+      $this->html->setCss([
+        "admin/css/all.min.css",
+        "admin/css/bootstrap.css.map",
+        "admin/css/bootstrap.min.css",
+        "admin/css/fontawesome.min.css",
+        "admin/css/login.css",
+      ]);  
+      $this->html->setJs([
+        "admin/js/jquery.min.js",
+        "admin/js/jquery.min.js",
+        "admin/js/bootstrap.min.js",
+        "admin/js/all.min.js",
+        "admin/js/fontawesome.min.js",
+        "admin/js/login.js"
+      ]);
+      
         $data['action'] = toLink("admin/login/submit");
-        echo  $this->layout->render($this->view->render("admin\login",$data));
+        echo  $this->layout->render($this->view->render("admin\login",$data) , "nav");
     }
 
     public function submit()
     {
+        
         $this->isValid();
         return $this->json();
 

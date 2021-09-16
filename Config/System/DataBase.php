@@ -177,7 +177,11 @@ class DataBase
             $sql .= " $key = ? , ";
         }
         $sql = rtrim($sql , ", ");
-        
+        if($this->wheres)
+        {
+            $sql .= " WHERE ".implode(" ",$this->wheres);
+        }
+
         $query = $this->query($sql , $this->bindings);
         $this->lastid  = static::$connection->lastInsertId();
         $this->rowcount  = $query->rowCount();
@@ -342,6 +346,7 @@ class DataBase
             $this->from($table);
         }
         $sql = $this->prepareSql();
+      
         $query = $this->query($sql , $this->bindings);
         $results =  $query->fetchAll();
         $this->reset();
@@ -362,6 +367,7 @@ class DataBase
         $this->orderby = null;
         $this->limit = null;
         $this->offset = null;
+        $this->join = [];
         $this->groupby = null;
         
     }
