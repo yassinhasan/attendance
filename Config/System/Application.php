@@ -47,7 +47,7 @@ class Application
             }
             else
             {
-               // $this->url->header("notfound");
+                $this->url->header("notfound");
             }
     
         }
@@ -147,8 +147,8 @@ class Application
         $this->request->prepareUrl();
         $this->file->require("App/index");
         list($controller , $action , $args) = $this->route->isMatch();
+        $this->route->getAllCalls();
         $output = (string) $this->load->action($controller,$action,$args);
-       
         $this->response->setOutput($output);
         $this->response->send();
     }

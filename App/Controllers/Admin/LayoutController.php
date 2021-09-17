@@ -16,6 +16,7 @@ class LayoutController extends Controller
         $data['footer'] = $this->load->controller("Admin\Common\\footer")->index();
         if(in_array($exceptiion , array_keys($data)))
         {
+          
            $data[$exceptiion] = null;
         }
         return $this->view->render("admin\layout",$data);

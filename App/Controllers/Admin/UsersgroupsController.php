@@ -56,6 +56,7 @@ class UsersgroupsController extends Controller
       $data['edit_data']  =  toLink("admin/usersgroups/edit/");
       $data['delete_data']  =  toLink("admin/usersgroups/delete/");
       $data['delete_download']  =  toLink("admin/usersgroups/download");
+
       echo  $this->layout->render($this->view->render("admin\usersgroups",$data));
     }
 

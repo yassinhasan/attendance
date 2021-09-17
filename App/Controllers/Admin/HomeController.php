@@ -51,17 +51,11 @@ class HomeController extends Controller
         "admin/js/main.js",
 
       ]);
-      $user = $this->load->model("login");
-      if(!$user->isLogin())
-      {
-        $this->url->header("/");
-      }
 
-      $user = $this->load->model("login");
+     // $user = $this->load->model("login");
 
-      $data['user'] = $user-> user();
       // return view home.php
-      echo  $this->layout->render($this->view->render("admin\home",$data));
+      echo  $this->layout->render($this->view->render("admin\home"));
     }
 
 }

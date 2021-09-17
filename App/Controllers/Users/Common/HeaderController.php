@@ -9,8 +9,8 @@ class HeaderController extends Controller
     {
 
       $data['title'] =  $this->html->getTitle("home");
-      $data['css'] =  $this->html->getCss("css");
-      $data['js'] =  $this->html->getJs("js");
+      $data['css'] =  $this->html->getCss();
+      $data['js'] =  $this->html->getJs();
       return  $this->view->render("users\common\header",$data);
     }
 }

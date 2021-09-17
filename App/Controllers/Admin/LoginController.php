@@ -14,6 +14,15 @@ class LoginController extends Controller
         }
               // all css 
 
+
+      $imagesrc = toPublicDirectory("uploades/images/user.png");
+      $imagetype = pathinfo($imagesrc,PATHINFO_EXTENSION);
+      $file = file_get_contents($imagesrc);
+
+      $icon = "data:image/$imagetype;base64,".base64_encode($file);
+      $this->html->setCdn("favicon","<link rel='icon' 
+      type='image/png' 
+      href='$icon'>");
       $this->html->setCss([
         "admin/css/all.min.css",
         "admin/css/bootstrap.css.map",

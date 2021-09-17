@@ -8,10 +8,24 @@ class VerifyController extends Controller
     public function index()
     {
         $this->html->setTitle("verify");
-        $this->html->setCss("users/css/verify");
-        $this->html->setJs("users/js/verify");
+        $this->html->setCss([
+            "users/css/all.min.css",
+            "users/css/bootstrap.css.map",
+            "users/css/bootstrap.min.css",
+            "users/css/fontawesome.min.css",
+            "users/css/verify.css",
+          ]);  
+          $this->html->setJs([
+            "users/js/jquery.min.js",
+            "users/js/jquery.min.js",
+            "users/js/bootstrap.min.js",
+            "users/js/all.min.js",
+            "users/js/fontawesome.min.js",
+            "users/js/verify.js"
+          ]);
+
         $data['action'] = toLink("users/verify/submit");
-        echo  $this->layout->render($this->view->render("users\\verify",$data));
+        echo  $this->userslayout->render($this->view->render("users\\verify",$data));
         /////////////
     }
 

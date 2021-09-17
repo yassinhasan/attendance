@@ -113,6 +113,16 @@ class UsersgroupsModel extends Model
       
     }
 
+    public function getAllowedPermessions($id)
+    {
+
+        $results = $this->select(" permession_name ")->where(" group_id = ? " , $id)->fetchAll($this->table_name);
+        return $results;
+
+    }
+
+
+
         
        
     

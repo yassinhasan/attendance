@@ -72,3 +72,10 @@ $app->addInContainer("userslayout",function($app){
       return $app->load->controller("Users\Layout");  
 });
 
+$app->route->callFirst(function($app){
+    $app->load->controller("Access")->index();  
+});
+
+$app->route->addRoute("access","Access");
+$app->route->addRoute("notaccess","Notaccess");
+

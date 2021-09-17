@@ -13,9 +13,8 @@ class HomeController extends Controller
       $type = pathinfo($image_src,PATHINFO_EXTENSION);
       $file = file_get_contents($image_src);
       $icon = "data:image/".$type.";base64, ".base64_encode($file);
-      $this->html->setCdn("favicon","<link rel='icon' 
-      type='image/png' 
-      href='$icon'>");    
+      $this->html->setCdn("favicon","<link rel='icon' type='image/png'  href='$icon'>");    
+
 
       echo  $this->userslayout->render($this->view->render("users/home"));
     }

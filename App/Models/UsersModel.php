@@ -6,8 +6,8 @@ use System\Model;
 
 class UsersModel extends Model
     {
-        private $table_name = "users";
-        private $emailsent = false;
+        protected $table_name = "users";
+        protected $emailsent = false;
 
         /**
          * @ mixed params

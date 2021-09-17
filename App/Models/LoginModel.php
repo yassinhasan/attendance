@@ -7,7 +7,7 @@ use System\Model;
 class LoginModel extends Model
     {
         use Filter;
-        private $user;
+        protected $user;
         protected $table_name = "users";
         
         public function checkValidLoginUser($email , $password)

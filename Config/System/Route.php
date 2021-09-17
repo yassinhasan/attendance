@@ -1,11 +1,15 @@
 <?php
 namespace System;
+
+use Closure;
 use System\Application;
 class Route 
 {
     private $app;
     private $routes = [];
     private $method;
+    private $current_url;
+    private $calls = [];
 
     public function __construct(Application $app)
     {
@@ -101,6 +105,7 @@ class Route
             {  
                 
                 $this->method = $route['method'];
+                $this->current_url = $route['url'];
                 $args = $this->getArgs($route['pattern']);
                 list($controller , $action)  = explode("@",$route['action']);
 
@@ -118,7 +123,29 @@ class Route
     }
 
 
+    public function currentUrl()
+    {
+        return $this->current_url;
+    }
 
+    public function callFirst(Closure $call)
+    {
+        $this->calls[] = $call;
+    }
+
+    public function getAllCalls()
+    {
+        if(!empty($this->calls))
+        {
+            
+            foreach($this->calls as $call)
+            {
+                
+                return call_user_func($call,$this->app);
+            }
+        }
+       
+    }
 
 
 }

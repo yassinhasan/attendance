@@ -10,23 +10,36 @@ class LoginController extends Controller
         $loginmodel = $this->load->model("login");
         if($loginmodel->isLogin())
         {
+            
             $this->url->header("/");
         }
         $this->html->setTitle("login");
-        $this->html->setCss("users/css/login");
-        $this->html->setCss("users/css/style");
-        $this->html->setJs("users/js/login");
-        $this->html->setJs("users/js/main");
+
+
+        $this->html->setCss([
+            "users/css/all.min.css",
+            "users/css/bootstrap.css.map",
+            "users/css/bootstrap.min.css",
+            "users/css/fontawesome.min.css",
+            "users/css/login.css",
+          ]);  
+          $this->html->setJs([
+            "users/js/jquery.min.js",
+            "users/js/jquery.min.js",
+            "users/js/bootstrap.min.js",
+            "users/js/all.min.js",
+            "users/js/fontawesome.min.js",
+            "users/js/login.js"
+          ]);
+          
         $data['action'] = toLink("users/login/submit");
-        echo  $this->layout->render($this->view->render("users\login",$data));
+        echo  $this->userslayout->render($this->view->render("users\login",$data));
     }
 
     public function submit()
     {
         $this->isValid();
         return $this->json();
-
-
     }
 
     public function isValid()
