@@ -1,11 +1,6 @@
 <?php
 
-// TODO: في حاله الادخال لو فيه صلاحيه موجوده قبل كده مدخلهاش تجاهلها
-// TODO: FETCH BY PAGES 
-// TODO: group permesion 
-// TODO:  add page of group permesion // model // controller // data base 
 // TODO: foregt password
-/* FIXME: access controller  */
 /* FIXME: not found controller  */
 // HACK(john): This is a workaround
 // TODO(john): A comment in HTML file 

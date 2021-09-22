@@ -123,8 +123,8 @@
 }
 .pagination li.dot 
 {
-    cursor: default;
     pointer-events: none;
+    cursor: default;
 }
 .pagination li.dot:hover
 {
@@ -141,3 +141,4 @@
  
 
 }
+

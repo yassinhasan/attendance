@@ -1,35 +1,32 @@
+let add_new_btn = document.querySelector(".add-new");
 let submit_btn  = document.querySelector(".submit-btn");
-
 // <form class="add-form">  in modal
 let form        = document.querySelector(".add-form");
 let table       = document.querySelector(".table");
 
-// $data['load_data']  =  toLink("admin/usersgroups/realtime");
- let load_data   = table.getAttribute("data-load");
-
-//$data['edit_data']  =  toLink("admin/usersgroups/edit/");
-let edit_data   = table.getAttribute("data-edit"); 
+// $data['load_data']  =  toLink("admin/areagroups/realtime");
+let load_data   = table.getAttribute("data-load");
 
 let result = document.querySelectorAll(".result");
 
- //$data['delete_data']  =  toLink("admin/usersgroups/delete/");
-let delete_data   = table.getAttribute("data-delete");
-
-let add_new_btn = document.querySelector(".add-new");
 let table_serach = document.querySelector(".table-serach");
 
 let search_by_item = document.querySelector(".search_item");
 
 let select_no_pages  = document.querySelector(".select-no-pages");
 
-let btndownlload = document.querySelector(".btn-download");
+//$data['edit_data']  =  toLink("admin/areagroups/edit/");
+let edit_data   = table.getAttribute("data-edit"); 
 
-
-
+ //$data['delete_data']  =  toLink("admin/usersgroups/delete/");
+let delete_data   = table.getAttribute("data-delete");
 add_new_btn.addEventListener("click",()=>
 {
-    $('#formModal').modal('toggle');
+
+    $('#areagroupmodel').modal('toggle');
 })
+
+//  on load
 
 // load all data when refresh page
 window.addEventListener("load",()=>
@@ -39,15 +36,17 @@ window.addEventListener("load",()=>
     
     // // $data['load_data']  =  toLink("admin/usersgroups/realtime");
  
-    fetchdata(load_data)
+    fetchdata(load_data);
+
 });
 submit_btn.addEventListener("click",(e)=>
 {
+    loadspinner();
     //$data['action']     =  toLink("admin/usersgroups/submit");
     let url = submit_btn.getAttribute("data-target");
-
     let sending_data  = new FormData(form);
     clearResultError(result)
+
     fetch(url,
         {
             method : "POST",
@@ -57,21 +56,19 @@ submit_btn.addEventListener("click",(e)=>
             {
                 if(data.error)
                 {
-                    console.log(data.error)
-                    if(data.error.group_id)
+                    if(data.error.area_id)
                     {
-                        document.querySelector(".group_id").classList.add("alert" , "alert-danger");
-                        document.querySelector(".group_id").innerHTML =  " sorry you must choose user type";
+                        document.querySelector(".area-id").classList.add("alert" , "alert-danger");
+                        document.querySelector(".area-id").innerHTML = data.error.area_id;
                     }
-                    if(data.error.permession_name)
+                    if(data.error.area_name)
                     {
-                        document.querySelector(".permession_name").classList.add("alert" , "alert-danger");
-                        document.querySelector(".permession_name").innerHTML = "sorry you must choose permession  name";
+                        document.querySelector(".area-name").classList.add("alert" , "alert-danger");
+                        document.querySelector(".area-name").innerHTML = data.error.area_name;
                     }
                 }
                 if(data.suc)
                 {
-                    
                     fetchdata(load_data)
                     Swal.fire({
                         title: 'success',
@@ -80,21 +77,14 @@ submit_btn.addEventListener("click",(e)=>
                         showConfirmButton: false,
                         timer: 1200
                       })
-                      $('#formModal').modal('toggle');
-
-                        
+                      $('#areagroupmodel').modal('toggle');  
                 }
                 if(data.db_error)
                 {
                     console.log(data.db_error)
                 }
             }) 
-
-
 })
-
-
-
 
 select_no_pages.addEventListener("change",()=>
 {
@@ -112,7 +102,6 @@ search_by_item.addEventListener("input",()=>
    
     fetchdata(load_data)
 })
-
 function clearResultError(resultdivs)
 {
 
@@ -123,13 +112,6 @@ function clearResultError(resultdivs)
     });
 
 }
-
-// here i will send paginaion recodrs 
-// i need number of pages from form select
-// // according to data come from realtime 
-// i will get number of pages so make pagination icons
-// then when i add clicked attrubiute on icon to send current page
-
 
 function fetchdata(loaddata ,currentpage)
 {
@@ -292,30 +274,67 @@ function clickedpage(elment)
     })
 }
 
+function makeTable(results)
+{
+   
+    let edit_btn;
+    let delete_btn;
+    let tbody = document.querySelector(".tbody");
+    tbody.innerHTML = "";
+    let addedd_column = "";
+    if( Array.isArray(results) )
+    {
+        for (let index in  results) 
+        {
+           addedd_column += `<tr>
+                            <td>
+                            ${results[index].area_id}
+                            </td>
+                            <td>
+                                ${results[index].area_name}
+                            </td>
+                        <td class='action'>
+                            <button data-href="${edit_data}${results[index].area_id}" class="btn btn-primary edit "
+                            data-target="#editmodal" data-toggle= "modal"
+                            ><i class="fas fa-edit"></i></button>
+                            <button data-href="${delete_data}${results[index].area_id}" class="btn btn-danger delete"
+                            data-permession="${results[index].area_name}""><i class="fas fa-times"></i></button>
+                        </td>
+                    </tr>`;
+        }
+    }
 
+    tbody.innerHTML = addedd_column ;
+     edit_btn       = document.querySelectorAll(".edit");
+     delete_btn     = document.querySelectorAll(".delete");
+     
+  //  after oclick on edit btn 
+    edit(edit_btn) 
 
+  //  after click on delete btn
+    delete_by_id(delete_btn) 
+}
 
-
-
-
+//
 
 // click on edit on button on table to edit data 
 
 // edit_url       = element.getAttribute("data-href"); == ${edit_data}${results[index].group_id};
-//     == http://www.attendance.com/admin/usersgroups/edit/1
+//     == http://www.attendance.com/admin/areagroups/edit/1
 let edit_url; 
 function edit(el)
 {
     el.forEach(element => {
         element.addEventListener("click",()=>
             {
-
+                 
                  loadspinner()
                   if(document.getElementById("editmodal"))
                   {
                     document.getElementById("editmodal").remove()
+                   
                   }
-                  edit_url       = element.getAttribute("data-href"); 
+                  edit_url  = element.getAttribute("data-href"); 
                   
                   fetch(edit_url,{
                       method: "POST"
@@ -360,22 +379,20 @@ function update(elmenet , edit_form)
                 }).then(resp=>resp.json())
                 .then(data=>
                     {
-
                          loadspinner();
-                         if(data.error)
-                         {
-                             removespinner();
-                             if(data.error.group_id)
+                        if(data.error)
+                         {   removespinner();
+                             if(data.error.area_id)
                              {
-                                 document.querySelector(".group_id").classList.add("alert" , "alert-danger");
-                                 document.querySelector(".group_id").innerHTML =  " sorry you must choose user type";
+                                 document.querySelector(".area-id").classList.add("alert" , "alert-danger");
+                                 document.querySelector(".area-id").innerHTML = data.error.area_id;
                              }
-                             if(data.error.permession_name)
+                             if(data.error.area_name)
                              {
-                                 document.querySelector(".permession_name").classList.add("alert" , "alert-danger");
-                                 document.querySelector(".permession_name").innerHTML = "sorry you must choose permession  name";
+                                 document.querySelector(".area-name").classList.add("alert" , "alert-danger");
+                                 document.querySelector(".area-name").innerHTML = data.error.area_name;
                              }
-                         }
+                         } 
                         if(data.suc)
                         {
                              removespinner()
@@ -385,7 +402,7 @@ function update(elmenet , edit_form)
                                 icon: 'success',
                                 showConfirmButton: false,
                                 timer: 1200
-                              });
+                              })
                               fetchdata(load_data)
                               $('#editmodal').modal('toggle');
                         }
@@ -455,50 +472,7 @@ function delete_by_id(el)
             
     });
 }
-
-
-// let pagination = new Pagination(5 , 1);
-
-function makeTable(results)
-{
-   
-    let edit_btn;
-    let delete_btn;
-    let tbody = document.querySelector(".tbody");
-    let user_type; 
-    tbody.innerHTML = "";
-    let addedd_column = "";
-    for (let index in  results) 
-    {
-           addedd_column += `<tr>
-                            <td>
-                            ${results[index].group_name}
-                            </td>
-                            <td>
-                                ${results[index].permession_name}
-                            </td>
-                        <td class='action'>
-                            <button data-href="${edit_data}${results[index].group_id}" class="btn btn-primary edit "
-                            data-target="#editmodal" data-toggle= "modal"
-                            ><i class="fas fa-edit"></i></button>
-                            <button data-href="${delete_data}${results[index].group_id}" class="btn btn-danger delete"
-                            data-permession="${results[index].permession_id}""><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>`;
-     }
-
-
-    tbody.innerHTML = addedd_column ;
-    edit_btn       = document.querySelectorAll(".edit");
-    delete_btn     = document.querySelectorAll(".delete");
-     
-    // after oclick on edit btn 
-    edit(edit_btn) 
-
-    // after click on delete btn
-    delete_by_id(delete_btn) 
-}
-
+// 
 function loadspinner()
 {
     document.querySelector('.loadinsuccess').classList.add("active")

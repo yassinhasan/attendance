@@ -24,7 +24,7 @@ class SignupController extends Controller
             "admin/js/signup.js"
           ]);
         $data['action'] = toLink("admin/signup/submit");
-        echo  $this->layout->render($this->view->render("admin\signup",$data) , "nav");
+        echo  $this->layout->render($this->view->render("admin\signup",$data) , ["nav"]);
     }
 
     public function submit()

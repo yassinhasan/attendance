@@ -40,7 +40,7 @@ class LoginController extends Controller
       ]);
       
         $data['action'] = toLink("admin/login/submit");
-        echo  $this->layout->render($this->view->render("admin\login",$data) , "nav");
+        echo  $this->layout->render($this->view->render("admin\login",$data) ,["nav"]);
     }
 
     public function submit()

@@ -1,7 +1,7 @@
 <div class="table-center">
   
     <h2 class="text-center heading">
-        Users Group Permessions
+        Area Group 
     </h2>
 
     <div class="table-items">
@@ -20,19 +20,20 @@
                     </select>
         </div>
     </div>
+
     <!-- search sectiob -->
     <div class="table-items">
         <div></div>
 
         <div class="form-group">
-            <input type="search" placeholder="search by user tpe" class="form-control table-serach" name="search">
+            <input type="search" placeholder="search by id" class="form-control table-serach" name="search">
         </div>
     </div>
     <div class="table-items">
          <div></div>
 
         <div class="form-group">
-            <input type="search" placeholder="search by user permession name" class="form-control search_item" name="search_item">
+            <input type="search" placeholder="search by area name" class="form-control search_item" name="search_item">
         </div>
     </div>
      <!-- search sectiob -->
@@ -42,10 +43,10 @@
         <thead>
             <tr>
                 <th>
-                    User Type
+                    Area ID
                 </th>
                 <th>
-                    Allowed Permessions
+                    Area Name
                 </th>
                 <th>
                     Action
@@ -58,62 +59,44 @@
     </table>
 </div>
 
-<!-- pagination -->
 <nav aria-label="Page navigation">
   <ul class="pagination justify-content-center">
   </ul>
 </nav>
-<div class="modal"  id="formModal">
-    
-<!-- modal form must have id=""  equal to data-target in button -->
-<div class="modal-dialog modal-dialog-centered" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content custom-modal" >
-      <div class="modal-header">
-        <h5 class="modal-title">Add New <?= $custom_add ?></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="add-form">
-            <div class="form-group">
-                <select class="form-control"name='group_id'>
-                    <option value=""> 
-                        Select User Type
-                    </option>
-                    <option value="1">
-                            Admin
-                    </option>
-                    <option value="2">
-                            User
-                    </option>
-                </select>
-            </div>
-            <div class="result group_id"></div>
-            <div class="form-group" style="margin: 20px 0 0 0;">
-                <select class="form-control" multiple style="padding: 10px;" name="permession_id[]">
-                    <?php 
-                        $all_permessions = $this->app->route->allRoutesUrl();
-                        foreach($all_permessions as $key=>$permession){ ?> 
-                            <option value="<?= $key ?>">
-                            <?= $permession ?>
-                        </option>
-                        <?php } ?>
-                    
-                </select>
-            </div>
-            <div class="result permession_name"></div>
-        </form>
-      </div>
-      <div class="modal-footer custom-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    >Close</button>
-                    <button type="button" class="btn btn-primary submit-btn" data-target="<?= $action ?>">Save changes</button>
-      </div>
+
+<div class="modal"  id="areagroupmodel">  
+    <!-- modal form must have id=""  equal to data-target in button -->
+    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content custom-modal" >
+        <div class="modal-header">
+            <h5 class="modal-title">Add New <?= $custom_add ?></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="add-form">
+                <div class="form-group">
+                    <label for="area_id"> Area Id</label>
+                    <input class="form-control" type="text" name="area_id" id="area_id">
+                </div>
+                <div class="result area-id"></div>
+                <div class="form-group" style="margin: 20px 0 0 0;">
+                <label for="area_name"> Area Name</label>
+                    <input class="form-control" type="text" name="area_name" id="area_name">
+                </div>
+                <div class="result area-name"></div>
+            </form>
+        </div>
+        <div class="modal-footer custom-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        >Close</button>
+                        <button type="button" class="btn btn-primary submit-btn" data-target="<?= $action ?>">Save changes</button>
+        </div>
+        </div>
     </div>
-  </div>
-</div>
+    </div>
 </div>
 
 
@@ -147,7 +130,14 @@
 </div>
 <div class="overlay">
 </div>
+<!-- spinner -->
 
+<!-- pagination -->
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+  </ul>
+</nav>
+<!-- donloawd -->
 <div class="justify-content-center" style="text-align: center; margin: 30px 0">
     <form method="POST">
     <a class="btn btn-success btn-download" href="<?= $delete_download ?>">

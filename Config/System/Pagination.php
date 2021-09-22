@@ -6,7 +6,7 @@ class Pagination
     private $app;
     private $limit;
     private $count;
-    private $currentpage = 1;
+    private $currentpage;
     private $offset = 0;
     public function __construct(Application $app )
     {
@@ -25,8 +25,9 @@ class Pagination
     //$offset    =  $pagination->getOffset()
     public function setLimit()
     {
-        $limit = $this->app->request->post("limit");
-        $this->limit = (null != $limit) ? $limit : 5;
+        $limit =intval($this->app->request->post("limit"));
+
+        $limit= (null != $limit || $limit != "") ? $limit : 5;
         $this->limit = $limit;
         return $this;
     }
@@ -36,24 +37,19 @@ class Pagination
         return $this->limit;
     }
 
-    public function setCount($count)
-    {
-        $this->count = $count;
-        return $this;
-    }
     public function getCount()
     {
         return $this->count;
     }
 
-    public function getPages()
+    public function getPages($count)
     {
-        return ceil($this->count / $this->limit);
+        return ceil($count / $this->getLimit());
     }
 
     public function setCuurentPage()
     {
-        $currentpage = $this->app->request->post("currentpage");
+        $currentpage = intval($this->app->request->post("currentpage"));
         $this->currentpage = (null != $currentpage) ? $currentpage : 1;
         return $this;
     }

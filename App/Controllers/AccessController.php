@@ -9,19 +9,30 @@ class AccessController extends Controller
     {
         $excpetion_url = [
             "/admin/login" , 
+            "/admin/login/submit" , 
             "/users/login" , 
+            "/users/login/submit" , 
             "/admin/signup" , 
-            "/users/signup" , 
+            "/admin/signup/submit" , 
+            "/users/signup/submit" , 
             "/",
             "notfound",
-            "notaccess"
+            "notaccess",
+            "/users/verify",
+            "/users/verify/submit",
         ];
 
-        $user= $this->load->model("login");
 
+
+
+        $user= $this->load->model("login");
+        if( ! $user->isLogin() AND !in_array($this->request->url() , $excpetion_url) )
+        {
+               $this->url->header("admin/login");
+        }
         if($user->isLogin()  )
         {
-           
+         
              /// now iam login  // then get user
             $loggeduser = $user->user();
             $usersgroupsmodel = $this->load->model("usersgroups");
@@ -39,11 +50,12 @@ class AccessController extends Controller
        
             if(!in_array($this->route->currentUrl() , $user_permessions ) )
             {
-                $this->url->header("notaccess");
+              $this->url->header("notaccess");
             }
+        }
             
 
-        }
+        // }
         
         
         //else 

@@ -24,6 +24,7 @@
                     </option>
                 </select>
             </div>
+            <div class="result group_id"></div>
             <div class="form-group" style="margin: 20px 0 0 0;">
                 <select class="form-control" multiple style="padding: 10px;" name="permession_id[]">
                     <?php 
@@ -45,6 +46,7 @@
                     
                 </select>
             </div>
+            <div class="result permession_name"></div>
         </form>
       </div>
       <div class="modal-footer custom-footer">

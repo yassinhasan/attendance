@@ -50,6 +50,18 @@ $app->route->addRoute("admin","Admin/Home");
    $app->route->addRoute("admin/usersgroups/search","Admin/Usersgroups@search" , "POST");
    $app->route->addRoute("admin/usersgroups/download","Admin/Usersgroups@download" , "POST");
 
+
+   // area groups
+
+   $app->route->addRoute("admin/areagroups","Admin/Areagroups");
+   $app->route->addRoute("admin/areagroups/submit","Admin/Areagroups@submit");
+   $app->route->addRoute("admin/areagroups/edit/:id","Admin/Areagroups@edit","POST");
+   $app->route->addRoute("admin/areagroups/save/:id","Admin/Areagroups@save","POST");
+   $app->route->addRoute("admin/areagroups/delete/:id","Admin/Areagroups@delete","POST");
+   $app->route->addRoute("admin/areagroups/realtime","Admin/Areagroups@realtime" , "POST");
+   $app->route->addRoute("admin/areagroups/search","Admin/Areagroups@search" , "POST");
+   $app->route->addRoute("admin/areagroups/download","Admin/Areagroups@download" , "POST");
+
    
 
 

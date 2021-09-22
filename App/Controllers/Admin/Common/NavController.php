@@ -7,6 +7,7 @@ class NavController extends Controller
 {
     public function index()
     {    
+     
      $user = $this->load->model("login");
      if($user->isLogin())
      {

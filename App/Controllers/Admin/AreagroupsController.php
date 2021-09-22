@@ -3,14 +3,14 @@ namespace App\Controllers\Admin;
 
 use System\Controller;
 
-class UsersgroupsController extends Controller
+class AreagroupsController extends Controller
 {
 
     public function index()
     {
 
      // title
-      $this->html->setTitle("users groups");
+      $this->html->setTitle("area groups");
 
       // favicon
       // first get image path
@@ -35,7 +35,7 @@ class UsersgroupsController extends Controller
         "admin/css/bootstrap.min.css",
         "admin/css/fontawesome.min.css",
         "admin/css/main.css",
-        "admin/css/usersgroups.css",
+        "admin/css/areagroups.css",
       ]);  
       $this->html->setJs([
         "admin/js/jquery.min.js",
@@ -44,20 +44,20 @@ class UsersgroupsController extends Controller
         "admin/js/all.min.js",
         "admin/js/fontawesome.min.js",
         "admin/js/main.js",
-        "admin/js/usersgroups.js"
+        "admin/js/areagroups.js"
       ]);
 
    
-      // load all users groups
-      $usersgroupodel = $this->load->model("Usersgroups");
-      $data['custom_add'] = ' User Permessions';
-      $data['action']     =  toLink("admin/usersgroups/submit");
-      $data['load_data']  =  toLink("admin/usersgroups/realtime");
-      $data['edit_data']  =  toLink("admin/usersgroups/edit/");
-      $data['delete_data']  =  toLink("admin/usersgroups/delete/");
-      $data['delete_download']  =  toLink("admin/usersgroups/download");
+      // load all area groups
+      $areagroupodel = $this->load->model("Areagroups");
+      $data['custom_add'] = ' Areagroup';
+      $data['action']     =  toLink("admin/areagroups/submit");
+      $data['load_data']  =  toLink("admin/areagroups/realtime");
+      $data['edit_data']  =  toLink("admin/areagroups/edit/");
+      $data['delete_data']  =  toLink("admin/areagroups/delete/");
+      $data['delete_download']  =  toLink("admin/areagroups/download");
 
-      echo  $this->layout->render($this->view->render("admin\usersgroups",$data));
+      echo  $this->layout->render($this->view->render("admin\areagroups",$data));
     }
 
 
@@ -73,11 +73,11 @@ class UsersgroupsController extends Controller
           else
           {
               
-              $usersgroupodel = $this->load->model("usersgroups");
-              if($usersgroupodel->insert())
+              $areagroupodel = $this->load->model("areagroups");
+              if($areagroupodel->insert())
               {
                   $this->json['suc'] =  'Data inserted successfuly ';
-                  $this->json['suc_url'] = toLink("admin/usersgroups/realtime");
+                  $this->json['suc_url'] = toLink("admin/areagroups/realtime");
                 //  $this->json['redirect'] = toLink("admin/login");                    
   
               }else
@@ -92,8 +92,8 @@ class UsersgroupsController extends Controller
   
       public function isValid()
       {
-          return $this->validator->require("group_id")
-                          ->require("permession_id")
+          return $this->validator->require("area_id")
+                          ->require("area_name")
                           ->valid();
                          
       }
@@ -103,8 +103,8 @@ class UsersgroupsController extends Controller
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-        $usersgroupodel = $this->load->model("usersgroups");
-        $results =  $usersgroupodel->getAll();
+        $areagroupodel = $this->load->model("areagroups");
+        $results =  $areagroupodel->getAll();
 
         $count =  count($results['allwithoutlimit']);
 
@@ -113,27 +113,18 @@ class UsersgroupsController extends Controller
          $this->json['total'] = ceil($count / $limit); 
         return $this->json();
       }
-
-
-
-
       public function edit($id)
       {
         $id = $id[0];
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-        $data['action']     =  toLink("admin/usersgroups/save/$id");
-        $data['custom_add'] = ' User Permessions';
-        $usersgroupodel = $this->load->model("usersgroups");
-        $data['user_permessions'] = $usersgroupodel->getById($id[0]);
-        $selected_permessions =[];
-        foreach($data['user_permessions'] as $user)
-        {
-            $selected_permessions [] = $user->permession_id;
-        }
-        $data['selected_permessions'] = $selected_permessions;;
-        return $this->view->render("admin/forms/usergroupsform",$data);
+        $data['action']     =  toLink("admin/areagroups/save/$id");
+        $data['custom_add'] = ' Area groups';
+        $areagroupodel = $this->load->model("areagroups");
+        $data['area_group'] = $areagroupodel->getById($id[0]);
+
+        return $this->view->render("admin/forms/areagroupsform",$data);
 
       }
 
@@ -143,20 +134,21 @@ class UsersgroupsController extends Controller
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
+        $id = $id[0];
+       
         // deleted 
         if(! $this->isValid())
         {
            $this->json['error'] = $this->validator->getAllErrors();
         }else 
-        {
-          $id = $id[0];
-          $usersgroupodel = $this->load->model("usersgroups");
-          if($usersgroupodel->get_diffrent_selected_perpession($id))
-         {
-           $this->json['suc'] = 'updated succsuffuly';
-         }
+        { 
+            $areagroupodel = $this->load->model("areagroups");
+            if($areagroupodel->update($id))
+             {
+               $this->json['suc'] = 'updated succsuffuly';
+             }
         }
-
+ 
         return $this->json();
 
       }
@@ -166,17 +158,14 @@ class UsersgroupsController extends Controller
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-
-        $deleted_permession = $this->request->post("permession_id");
         $id = $id[0];
-        $usersgroupodel = $this->load->model("usersgroups");
-        if($usersgroupodel->deleteById($id , $deleted_permession))
+        $areagroupodel = $this->load->model("areagroups");
+        if($areagroupodel->deleteById($id))
         {
           $this->json['suc'] = 'data deleted';
         }
       return $this->json();
       }
-
 
       public function download()
       {
@@ -184,34 +173,28 @@ class UsersgroupsController extends Controller
           //   $this->url->header("/");
           // }
 
-          $usersgroupodel = $this->load->model("usersgroups");
-          $results  = $usersgroupodel->getAllPermession();
+          $areagroupodel = $this->load->model("areagroups");
+          $results  = $areagroupodel->getAll();
 
           $output = "";
 
           $output .= "<table class='table' bordered='1'>
                       <thead>
-                      <tr> <th> user type </th> </tr>
-                      <tr> <th> allowed permession </th> </tr>
+                      <tr> <th> Area Id</th> </tr>
+                      <tr> <th> Area Name </th> </tr>
                       </thead>
                       <tbody>
                       ";
           foreach($results as $result)
           {
-
-              
-             
-               
-        
                $output .= "<tr>
                                 <td>
-                                $result->group_name
+                                $result->area_id
                                 </td>
                                 <td>
-                                $result->permession_name
-                            </td>
+                                $result->area_name
+                               </td>
                         </tr>";
-         
           }
 
           $output .= "</tbody> </table>";
@@ -221,6 +204,13 @@ class UsersgroupsController extends Controller
           echo $output;
           exit;
       }
+
+
+
+
+
+
+
 
     
       

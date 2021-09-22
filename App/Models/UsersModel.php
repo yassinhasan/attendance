@@ -26,7 +26,7 @@ class UsersModel extends Model
                 "lastname"  =>  $this->request->post('lastname'),
                 "email"  =>  $email,
                 "image"     =>  $image,
-                "group_id"  =>  1,
+                "group_id"  =>  2,
                 "logintime" =>  time(),
                 "logincode" =>  sha1(rand(0,1000)),
                 "status"    =>  'approved',

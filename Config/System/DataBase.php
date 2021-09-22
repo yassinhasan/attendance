@@ -156,7 +156,7 @@ class DataBase
         }
         $stmt->execute();
         $this->reset();
-
+        
        } catch (\Exception $e) {
            echo $e."<br>";
            echo $sql."<br>";
@@ -164,6 +164,7 @@ class DataBase
        }
        return $stmt;
     }
+
     public function insert($table = null)
     {
         // insert into users

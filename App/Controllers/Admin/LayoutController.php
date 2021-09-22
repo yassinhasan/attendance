@@ -6,19 +6,48 @@ use System\View\View;
 
 class LayoutController extends Controller
 {
-    public function render(View $content , $exceptiion = null)
+    
+    private $sections = [
+        "header" , "nav" , "footer"
+    ];
+    public function render(View $content , $exclude = [])
     {
-
-
-        $data['header'] = $this->load->controller("Admin\Common\header")->index();
-        $data['nav'] = $this->load->controller("Admin\Common\\nav")->index();
-        $data['content'] =  $content;
-        $data['footer'] = $this->load->controller("Admin\Common\\footer")->index();
-        if(in_array($exceptiion , array_keys($data)))
+        
+        foreach($this->sections as $section)
         {
-          
-           $data[$exceptiion] = null;
+    
+                if(!empty($exclude))
+                {
+                    if(in_array($section, $exclude))
+                    {
+                        $data[$section] = "";
+                      
+                    }else 
+                    {
+                        $data[$section] = $this->load->controller("Admin\Common\\$section")->index(); 
+                    } 
+                }else 
+
+                {
+                    $data[$section] = $this->load->controller("Admin\Common\\$section")->index();  
+                }
+
+  
+               
+
+                 
+    
+    
         }
+
+          $data['content'] = $content;
+
         return $this->view->render("admin\layout",$data);
     }
 }
+
+
+
+
+
+

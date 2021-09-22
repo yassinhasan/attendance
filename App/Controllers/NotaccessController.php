@@ -35,7 +35,7 @@ class NotaccessController extends Controller
 
       ]);
 
-      echo  $this->layout->render($this->view->render("notaccess"),"nav");
+      echo  $this->layout->render($this->view->render("notaccess"),["nav"]);
     }
 
 }
