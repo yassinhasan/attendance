@@ -11,12 +11,6 @@ class NotaccessController extends Controller
 
       // title
       $this->html->setTitle("Nota ccess");
-
-
-
-
-
-      
       // all css
       $this->html->setCss([
         "admin/css/all.min.css",
@@ -35,7 +29,7 @@ class NotaccessController extends Controller
 
       ]);
 
-      echo  $this->layout->render($this->view->render("notaccess"),["nav"]);
+      echo  $this->userslayout->render($this->view->render("notaccess"));
     }
 
 }

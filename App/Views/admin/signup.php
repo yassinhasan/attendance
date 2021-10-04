@@ -17,6 +17,12 @@
         </div>
         <div class="form-row">
             <div class="form-group col-12">
+                <label for="supervisors_id">Supervisor ID</label>
+                <input type="text" class="form-control" id="supervisors_id" name="supervisors_id">
+                <div class="result supervisors_id"></div>
+                <div class="result users_id"></div>
+            </div>
+            <div class="form-group col-12">
             <label for="inputEmail4">Email</label>
             <input type="email" class="form-control" id="inputEmail4" name="email">
             <div class="result email">

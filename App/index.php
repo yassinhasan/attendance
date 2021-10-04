@@ -6,15 +6,16 @@ $app = Application::getInstance();
 
 // users
 
-$app->route->addRoute("/","Users/Home");
+$app->route->addRoute("/","Users/Home" ,  "POST");
+$app->route->addRoute("/usershome","Users/Usershome" ,  "POST");
    // users ==> login page
-   $app->route->addRoute("users/login","Users/Login");
-   $app->route->addRoute("users/login/submit","Users/Login@submit");
+   $app->route->addRoute("users/login","Users/Login" , "POST");
+   $app->route->addRoute("users/login/submit","Users/Login@submit" , "POST");
    // users ==> signup page
-   $app->route->addRoute("users/signup","Users/Signup");
-   $app->route->addRoute("users/signup/submit","Users/Signup@submit");
+   $app->route->addRoute("users/signup","Users/Signup" , "POST");
+   $app->route->addRoute("users/signup/submit","Users/Signup@submit" , "POST");
    // users ==> logour
-   $app->route->addRoute("users/logout","Users/Logout");
+   $app->route->addRoute("users/logout","Users/Logout" , "POST");
 
    // verify http://www.attendance.com/users/verify?email=marwamedhat87@gmail.com&code=89f549b2a5341a05a7e4afeb364599158a03a47f61301c097f
 
@@ -61,6 +62,29 @@ $app->route->addRoute("admin","Admin/Home");
    $app->route->addRoute("admin/areagroups/realtime","Admin/Areagroups@realtime" , "POST");
    $app->route->addRoute("admin/areagroups/search","Admin/Areagroups@search" , "POST");
    $app->route->addRoute("admin/areagroups/download","Admin/Areagroups@download" , "POST");
+
+   // areasupervisors
+
+   $app->route->addRoute("admin/areasupervisors","Admin/Areasupervisors");
+   $app->route->addRoute("admin/areasupervisors/submit","Admin/Areasupervisors@submit");
+   $app->route->addRoute("admin/areasupervisors/edit/:id","Admin/Areasupervisors@edit","POST");
+   $app->route->addRoute("admin/areasupervisors/save/:id","Admin/Areasupervisors@save","POST");
+   $app->route->addRoute("admin/areasupervisors/delete/:id","Admin/Areasupervisors@delete","POST");
+   $app->route->addRoute("admin/areasupervisors/realtime","Admin/Areasupervisors@realtime" , "POST");
+   $app->route->addRoute("admin/areasupervisors/search","Admin/Areasupervisors@search" , "POST");
+   $app->route->addRoute("admin/areasupervisors/download","Admin/Areasupervisors@download" , "POST");
+
+   // supervisors 
+
+   $app->route->addRoute("admin/supervisors","Admin/Supervisors");
+   $app->route->addRoute("admin/supervisors/submit","Admin/Supervisors@submit");
+   $app->route->addRoute("admin/supervisors/edit/:id","Admin/Supervisors@edit","POST");
+   $app->route->addRoute("admin/supervisors/preview/:id","Admin/Supervisors@preview","POST");
+   $app->route->addRoute("admin/supervisors/save/:id","Admin/Supervisors@save","POST");
+   $app->route->addRoute("admin/supervisors/delete/:id","Admin/Supervisors@delete","POST");
+   $app->route->addRoute("admin/supervisors/realtime","Admin/Supervisors@realtime" , "POST");
+   $app->route->addRoute("admin/supervisors/search","Admin/Supervisors@search" , "POST");
+   $app->route->addRoute("admin/supervisors/download","Admin/Supervisors@download" , "POST");
 
    
 

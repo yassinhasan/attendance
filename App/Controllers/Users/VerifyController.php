@@ -45,7 +45,7 @@ class VerifyController extends Controller
         if($this->isValid())
         {
             
-            if($usermode->verify())
+            if($usermode->verify("users"))
             {
                 $this->json['suc'] = ' Account Verfied Successfully ';
             }else

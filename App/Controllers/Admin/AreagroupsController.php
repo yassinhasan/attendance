@@ -78,11 +78,11 @@ class AreagroupsController extends Controller
               {
                   $this->json['suc'] =  'Data inserted successfuly ';
                   $this->json['suc_url'] = toLink("admin/areagroups/realtime");
-                //  $this->json['redirect'] = toLink("admin/login");                    
+                                  
   
               }else
               {
-                  $this->json['db_error'] = 'soory this is error in db';
+                  $this->json['db_error'] = 'sorry this area id or supervisor id is found before';
               }
           }
           return $this->json();
@@ -123,7 +123,6 @@ class AreagroupsController extends Controller
         $data['custom_add'] = ' Area groups';
         $areagroupodel = $this->load->model("areagroups");
         $data['area_group'] = $areagroupodel->getById($id[0]);
-
         return $this->view->render("admin/forms/areagroupsform",$data);
 
       }
@@ -146,6 +145,9 @@ class AreagroupsController extends Controller
             if($areagroupodel->update($id))
              {
                $this->json['suc'] = 'updated succsuffuly';
+             }else
+             {
+                 $this->json['db_error'] = 'No Updates Happened';
              }
         }
  

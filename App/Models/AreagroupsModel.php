@@ -9,17 +9,27 @@ class AreagroupsModel extends Model
     
     public function insert()
     {
-        $area = $this->db->data([
-                    "area_id"  =>  $this->request->post('area_id'),
-                    "area_name"  =>  $this->request->post('area_name')
 
-            ])->insert($this->table_name);   
-        return $area->rowCount() > 0 ;
+        $area_id  = $this->request->post('area_id');
+        $area_name  =$this->request->post('area_name');
+        $tablename = $this->table_name;
+        $sql ="
+        INSERT INTO $tablename (area_id, area_name )
+        SELECT * FROM (SELECT '$area_id', '$area_name') AS tmp
+        WHERE NOT EXISTS (
+            SELECT area_id   FROM $tablename WHERE area_id = '$area_id'
+        ) LIMIT 1;
+        ";
+        $stmt = $this->query($sql);
+        return  $stmt->rowCount() > 0;
         
     }
 
     public function getAll()
     {
+
+        //       $result = $this->select( " s.firstname , s.lastname , s.supervisors_id")->from(" supervisors s")->join( " LEFT JOIN areagroups ag ON  ag.supervisors_id = s.supervisors_id")->fetchAll() ;
+
         $offset = $this->pagination->getOffset();
  
         $limit = $this->request->post("limit") != null ? intval($this->request->post("limit")) : 5;
@@ -27,8 +37,8 @@ class AreagroupsModel extends Model
         $search_item= $this->request->post("search_item");
 
         $results = [];
-        $sql = " select * from ".$this->table_name;
-        $sql2 = " select * from ".$this->table_name;
+        $sql    = " select * from areagroups ";
+        $sql2   = " select * from areagroups ";
 
         if( $search_id!= null  AND  $search_id != "" )
         {   
@@ -70,13 +80,19 @@ class AreagroupsModel extends Model
 
     public function update($id)
     {
-            $area = $this->db->data([
+        $area = $this->db->data([
                     "area_id"  =>  $this->request->post('area_id'),
-                    "area_name"  =>  $this->request->post('area_name')
+                    "area_name"  =>  $this->request->post('area_name'),
 
             ])->where(" area_id = ? " , $id)->update($this->table_name);   
         return $area->rowCount() > 0 ;
-        
+
+    }
+
+    public function getSupervisors()
+    {
+       $result = $this->select( " s.firstname , s.lastname , s.supervisors_id")->from(" supervisors s")->join( " LEFT JOIN areagroups ag ON  ag.area_id = s.area_id")->fetchAll() ;
+       return $result;
     }
 
     

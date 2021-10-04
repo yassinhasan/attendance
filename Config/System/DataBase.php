@@ -139,6 +139,7 @@ class DataBase
 
     public function query(...$query)
     {
+        
         $sql = array_shift($query);
         if(count($query) == 1 AND is_array($query))
         {
@@ -148,20 +149,20 @@ class DataBase
        {
         $bindings = $query;
        }
-       
        try {
         $stmt = static::$connection->prepare($sql);
         foreach($bindings  as  $key => $value){
             $stmt->bindValue( $key+1 , _e($value)); 
         }
+
         $stmt->execute();
-        $this->reset();
         
        } catch (\Exception $e) {
            echo $e."<br>";
            echo $sql."<br>";
            pre($bindings);
        }
+       $this->reset();
        return $stmt;
     }
 
@@ -172,7 +173,8 @@ class DataBase
         {
             $this->table($table);
         }
-        $sql = " INSERT INTO $this->table SET ";
+        $sql = "";
+        $sql .= " INSERT INTO $this->table SET ";
         foreach(array_keys($this->data) as $key)
         {
             $sql .= " $key = ? , ";
@@ -186,6 +188,7 @@ class DataBase
         $query = $this->query($sql , $this->bindings);
         $this->lastid  = static::$connection->lastInsertId();
         $this->rowcount  = $query->rowCount();
+
         return $this;
 
     }
@@ -337,7 +340,6 @@ class DataBase
         $sql = $this->prepareSql();
         $query = $this->query($sql , $this->bindings);
         $result =  $query->fetch();
-        $this->reset();
         return $result;
     }
     public function fetchAll($table = null)
@@ -350,7 +352,6 @@ class DataBase
       
         $query = $this->query($sql , $this->bindings);
         $results =  $query->fetchAll();
-        $this->reset();
         return $results;
     }
 

@@ -1,4 +1,20 @@
 <?php
+// THIS WEEK
+
+
+// TODO: PREPARE AREASUPERVISORS by add supervisor name in select drop and it's value is 
+        // id after fenish of it
+        // prepare supervisors by join it's table by areasupervisors to get area name
+        // also connect area groups to supervisors name 
+        // when update supervisor we must change it first in areasupervisor 
+        // automaticaly will change in both area and supervisors
+        
+
+//TODO: //  MAKE DOWNLOAD XLMS NOT XLS 
+//TODO: // MAKT TABLE FOR SUPERVISOR AND THEIR DATA ALL DATA AND TABLE CONTAIN 
+//TODO: // when add area show who is exists area id or supservisor id in erro message
+
+
 
 // TODO: foregt password
 /* FIXME: not found controller  */

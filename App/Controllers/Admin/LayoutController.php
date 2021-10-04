@@ -31,13 +31,6 @@ class LayoutController extends Controller
                 {
                     $data[$section] = $this->load->controller("Admin\Common\\$section")->index();  
                 }
-
-  
-               
-
-                 
-    
-    
         }
 
           $data['content'] = $content;

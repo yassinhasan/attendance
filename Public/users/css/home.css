@@ -1,0 +1,109 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a
+{
+    text-decoration: none;
+}
+body
+{
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url(/Public/uploades/images/bg.jpg);
+}
+
+.wraper
+{
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    height: 180px;
+    transition: all 0.5s ease;
+}
+
+
+.wraper .users,.wraper .supervisors
+{
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px;  
+     padding-top: 100px; 
+     transition: all 0.5s ease;
+}
+.wraper .users
+{
+    background: #bd2130;
+}
+.wraper .users:hover,.wraper .supervisors:hover
+{
+    padding-top: 0px;
+}
+
+.wraper .text-head p
+{
+    font-size: 26px;
+    font-weight: 600;
+    color: #fff;
+    margin: 5px 0 0;
+}
+.wraper .supervisors
+{
+    background: #117a8b;
+}
+.wraper .users .text-head span,.wraper .supervisors .text-head span
+{
+    margin-bottom: 55px;
+    display: block;
+    color: #ccc;
+    font-size: 14px;
+    padding: 0 10px;
+}
+.wraper .users a,.wraper .supervisors a
+{
+    padding: 8px 20px;
+    font-size: 18px;
+    border-radius: 3px;
+    background: #fff;
+    margin-top: 15px;
+    transition: all 0.4s ease;
+    
+}
+.wraper .users a
+{
+    color: #bd2130;
+}
+.wraper .users a:hover
+{
+    color: #fff;
+    background: #117a8b;
+    text-decoration: none;
+}
+.wraper .supervisors a
+{
+    color: #117a8b;
+}
+.wraper .supervisors a:hover
+{
+    color: #fff;
+    background: #bd2130;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .wraper .text-head p
+    {
+        font-size: 16px;
+    }
+    .wraper .users .text-head span,.wraper .supervisors .text-head span
+    {
+        font-size: 12px;
+        margin-bottom: 65px;
+    }
+}

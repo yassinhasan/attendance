@@ -9,7 +9,7 @@ class NavController extends Controller
     {    
      
      $user = $this->load->model("login");
-     if($user->isLogin())
+     if($user->isLogin("supervisors"))
      {
           $data['user'] = $user-> user();
      }

@@ -14,6 +14,12 @@
       <li class="nav-item">
         <a class="nav-link" href="<?= toLink("admin/areagroups") ?>" data-target="areagroups">Area Groups <span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?= toLink("admin/areasupervisors") ?>" data-target="areasupervisors"> Areasupervisors <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?= toLink("admin/supervisors") ?>" data-target="supervisors">Supervisors <span class="sr-only">(current)</span></a>
+      </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

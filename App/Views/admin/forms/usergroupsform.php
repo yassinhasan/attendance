@@ -20,7 +20,10 @@
                               Admin
                     </option>
                     <option value="2" <?= $user_permessions[0]->group_id == 2 ? 'selected' : ''  ?>>
-                            User
+                            supervisors
+                    </option>
+                    <option value="3" <?= $user_permessions[0]->group_id == 3 ? 'selected' : ''  ?>>
+                            users
                     </option>
                 </select>
             </div>

@@ -63,8 +63,9 @@
   <ul class="pagination justify-content-center">
   </ul>
 </nav>
-<div class="modal"  id="formModal">
-    
+
+
+<div class="modal"  id="formModal"> 
 <!-- modal form must have id=""  equal to data-target in button -->
 <div class="modal-dialog modal-dialog-centered" tabindex="-1">
   <div class="modal-dialog">
@@ -86,7 +87,10 @@
                             Admin
                     </option>
                     <option value="2">
-                            User
+                    Supervisors
+                    </option>
+                    <option value="3">
+                            users
                     </option>
                 </select>
             </div>

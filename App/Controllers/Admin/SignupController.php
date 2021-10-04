@@ -7,7 +7,13 @@ class SignupController extends Controller
 {
     public function index()
     {
-
+        $loginmodel = $this->load->model("login");
+        $tablename = "supervisors";
+        if($loginmodel->isLogin($tablename))
+        {
+            
+            $this->url->header("admin");
+        }
         $this->html->setCss([
             "admin/css/all.min.css",
             "admin/css/bootstrap.css.map",
@@ -38,7 +44,7 @@ class SignupController extends Controller
         {
             
             $usermodel = $this->load->model("users");
-            if($usermodel->insert())
+            if($usermodel->insert("supervisors"))
             {
                 $this->json['suc'] =  'We Send Email For Verfiication ';
                 if($usermodel->isSentEmail())
@@ -61,10 +67,13 @@ class SignupController extends Controller
     {
         return $this->validator->require("firstname")
                         ->require("lastname")
+                        ->require("supervisors_id")
+                        ->exists(["supervisors_id","supervisors"])
+                        ->existsInAnother(["supervisors_id","users_id" , "users"]) // 
                         ->require("email")
                         ->email("email")
-                        ->exists(["email","users" , "verified" , 0])
-                        ->isVerified(["email","users" , "verified" , 0])
+                        ->exists(["email","supervisors" , "verified" , 0])
+                        ->isVerified(["email","supervisors" , "verified" , 0])
                         ->require("password")
                         ->image("image")
                         ->valid();

@@ -11,7 +11,9 @@ class Cookie
 
     public function setCookie($key,$value , $time)
     {
-        $time = $time === -1 ? -1 : (time() + 3600 * $time) ;
+        // time in hr
+        date_default_timezone_set('Africa/Cairo');
+        $time = $time === -1 ? -1 : (time() + (3600 * $time)) ;
         setcookie($key , $value  , $time , "/" , "" , false , true);
     }
     public function get($key)

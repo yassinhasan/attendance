@@ -48,6 +48,79 @@ class Validator
         }
         return $this;
     }
+    public function isInt($input,$message = null)
+    {
+        if($this->hasEroor($input))
+        {
+            return $this;
+        }
+        $inputvalue = $this->getValue($input);
+        if(! preg_match("/[0-9]+/",$inputvalue))
+        {
+            $message = $message !== null ? $message : sprintf("sorry  %s is NOT NUMBER",$input);
+            $this->message($input,$message);
+        }
+        return $this;
+    }
+    public function oldPassword($table,$message = null)
+    {
+
+        // select password from supervisors where password = "hasan" and id = id
+
+        $inputvalue = $this->getValue($table[0]); //hasan
+        if($inputvalue != "")
+        {
+            if(count($table) == 4)
+            {
+                // // select password from supervisors where password = "hasan" and id = id  $table = ['password' , 'supervisors' , 'id' , 4]
+                list($coulmn , $table_name , $id , $idvalue) = $table;
+                if($inputvalue !== "" or $inputvalue != null)
+                {
+                    $result = $this->app->db->select($coulmn)->from($table_name)->where(" $id = ? ",  $idvalue)->fetch();
+                    
+                    if($result != null)
+                    {
+                        if(! password_verify($inputvalue,$result->password))
+                        {
+                            $message = $message !== null ? $message : sprintf("sorry old  %s is not valid",$coulmn);
+                            $this->message($coulmn,$message);
+                        }
+                    }
+                }
+            }
+         }
+        return $this;
+    }
+
+    public function MatchOldPassword($password , $newoassword , $matchedpassword , $message = null)
+    {
+        
+        if($this->hasEroor($password))
+        {
+            return $this;
+        }else
+        {
+            $inputvalue = $this->getValue($newoassword);
+            $inputvalue2 = $this->getValue($matchedpassword);
+            if($inputvalue != "" or $inputvalue != null AND $inputvalue2 != "" or $inputvalue2 != null )
+            {
+
+                // if( !$this->isInt($newoassword))
+                // {
+                //     $message = $message !== null ? $message : sprintf("sorry new password must be numebr only  %s is not valid",$newoassword);
+                //     $this->message($newoassword,$message);
+                // }
+                $this->require($password);
+                if( $inputvalue !== $inputvalue2)
+                {
+                    $message = $message !== null ? $message : sprintf("sorry confirm password not match with new password");
+                   $this->message($matchedpassword,$message);
+                }
+            }
+        }
+        return $this;
+    }
+
     public function email($input,$message = null)
     {
         if($this->hasEroor($input))
@@ -124,6 +197,31 @@ class Validator
             $message = $message !== null ? $message : sprintf("sorry  %s is exists ",$coulmn);
             $this->message($coulmn,$message);
         }
+
+        return $this;
+    }
+    public function existsInAnother(array $table ,$message = null)
+    {
+        // (["users_id","supervisors_id" , "supervisors"])  
+        $columnname =  $table[0];     
+        if($this->hasEroor($table[0])) // it return value of value of variavle
+        {
+            return $this;
+        }
+        $inputvalue = $this->getValue(array_shift($table)); // == users_id 
+
+        $coulmn = $table[0] ;
+        $table_name = $table[1]; // [supervisors_id" , "supervisors"];
+        if($inputvalue !== "" or $inputvalue != null)
+        {
+            $result = $this->app->db->select($coulmn)->from($table_name)->where(" $coulmn = ? ", $inputvalue)->fetch();
+            if($result != null)
+            {
+                $message = $message !== null ? $message : sprintf("sorry  %s is exists by %s ",$columnname , $table_name);
+                $this->message($coulmn,$message);
+            }
+        }
+
 
         return $this;
     }

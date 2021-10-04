@@ -12,42 +12,41 @@ class UsersgroupsModel extends Model
         // 	group_id	permession_id	
         
 
-        $usertype = $this->request->post('group_id') == 1 ? 'admin ' : 'user';
+        $usertype = "";
+        $userid = $this->request->post('group_id');
+        switch ($userid) {
+            case 1:
+                $usertype = "admin";
+                break;
+            case 2:
+                $usertype = "supervisors";
+                break;
+            case 3:
+                $usertype = "users";
+                break;
+        }
         $all_permessions = $this->app->route->allRoutesUrl();
         $this->where( "group_id =  ? " ,$this->request->post('group_id') )->delete($this->table_name);
         $selected_permessions =  $this->request->post('permession_id');
+        $user = 0;
         foreach($selected_permessions as $permession)
         {
-            $user = $this->db->data([
+            $user +=$this->db->data([
                 "group_id"  =>  $this->request->post('group_id'),
                 "permession_id"  =>  $permession,
                 "permession_name" => $all_permessions[$permession],
                 " group_name"    => $usertype
     
-            ])->insert($this->table_name);   
+            ])->insert($this->table_name)->rowCount();
         }
 
-           
-        if($user->rowCount() > 0)
-        {
-        return true;    
-        }
-        else
-        {
-            return false;
-        }
+         return $user > 0 ;
+
     }
 
     public function getAllPermession()
     {
         $search = $this->request->post("search");
-        // $like = "";
-        // if(!empty($search))
-        // {
-        //     $like = " permession_name LIKE '%".$search."%'  " ;
-            
-        // }
-      //  $like = " permession_name LIKE '%".$search."%'  " ;
            $results = $this->select(" * ")->fetchAll($this->table_name);
             return $results;
     }
@@ -107,10 +106,22 @@ class UsersgroupsModel extends Model
 
          $selected_permessions = $this->request->post("permession_id");
 
-         $rowcount  = 0 ;
-         $usertype = $this->request->post('group_id') == 1 ? 'admin ' : 'user';
+         $updatedpermession = 0 ;
+         $usertype = "";
+         $userid = $this->request->post('group_id');
+         switch ($userid) {
+             case 1:
+                 $usertype = "admin";
+                 break;
+             case 2:
+                 $usertype = "supervisors";
+                 break;
+             case 3:
+                 $usertype = "users";
+                 break;
+         }
         foreach ($selected_permessions as $value) {
-          $rowcount +=  $this->data([
+             $updatedpermession +=  $this->data([
                "permession_id" => $value , 
                "group_id"      => $id,
                "permession_name" => $all_permessions[$value] ,
@@ -118,12 +129,8 @@ class UsersgroupsModel extends Model
            ])->insert($this->table_name)->rowCount();
         }
         
-        if($rowcount > 0 ) {
-            return true;
-        }else
-        {
-            return false;
-        }
+        return $updatedpermession > 0 ;
+      
     }
 
 

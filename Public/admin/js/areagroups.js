@@ -23,6 +23,7 @@ let delete_data   = table.getAttribute("data-delete");
 add_new_btn.addEventListener("click",()=>
 {
 
+    clearResultError(result)
     $('#areagroupmodel').modal('toggle');
 })
 
@@ -66,6 +67,7 @@ submit_btn.addEventListener("click",(e)=>
                         document.querySelector(".area-name").classList.add("alert" , "alert-danger");
                         document.querySelector(".area-name").innerHTML = data.error.area_name;
                     }
+                    removespinner()
                 }
                 if(data.suc)
                 {
@@ -78,10 +80,16 @@ submit_btn.addEventListener("click",(e)=>
                         timer: 1200
                       })
                       $('#areagroupmodel').modal('toggle');  
+                      removespinner()
                 }
                 if(data.db_error)
                 {
-                    console.log(data.db_error)
+                    if(data.db_error)
+                    {
+                        document.querySelector(".area-id").classList.add("alert" , "alert-danger");
+                        document.querySelector(".area-id").innerHTML = data.db_error;
+                    }
+                    removespinner()
                 }
             }) 
 })
@@ -131,9 +139,8 @@ function fetchdata(loaddata ,currentpage)
             
             removespinner()
             let results = data.results.allwithlimit;
-            let total = data.total;
-            
-            makeTable(results);
+            let total = data.total;          
+            makeTable(results );
             makePagination(total , currentpage)   
             let pagination_pages = document.querySelectorAll(".pagination li");
             if(pagination_pages)
@@ -297,7 +304,7 @@ function makeTable(results)
                             <button data-href="${edit_data}${results[index].area_id}" class="btn btn-primary edit "
                             data-target="#editmodal" data-toggle= "modal"
                             ><i class="fas fa-edit"></i></button>
-                            <button data-href="${delete_data}${results[index].area_id}" class="btn btn-danger delete"
+                            <button data-href="${delete_data}${results[index].id}" class="btn btn-danger delete"
                             data-permession="${results[index].area_name}""><i class="fas fa-times"></i></button>
                         </td>
                     </tr>`;
@@ -381,7 +388,7 @@ function update(elmenet , edit_form)
                     {
                          loadspinner();
                         if(data.error)
-                         {   removespinner();
+                         {   
                              if(data.error.area_id)
                              {
                                  document.querySelector(".area-id").classList.add("alert" , "alert-danger");
@@ -392,7 +399,8 @@ function update(elmenet , edit_form)
                                  document.querySelector(".area-name").classList.add("alert" , "alert-danger");
                                  document.querySelector(".area-name").innerHTML = data.error.area_name;
                              }
-                         } 
+                           removespinner();  
+                         }  
                         if(data.suc)
                         {
                              removespinner()
@@ -405,7 +413,20 @@ function update(elmenet , edit_form)
                               })
                               fetchdata(load_data)
                               $('#editmodal').modal('toggle');
+                        }else if(data.db_error)
+                        {
+                            removespinner()
+                            Swal.fire({
+                                title: 'success',
+                                text:  data.db_error,
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 1200
+                              })
+                              fetchdata(load_data)
+                              $('#editmodal').modal('toggle');
                         }
+                        removespinner();
 
                     })
                     

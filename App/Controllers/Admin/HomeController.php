@@ -11,11 +11,6 @@ class HomeController extends Controller
 
       // title
       $this->html->setTitle("admin");
-
-
-
-
-
       // favicon
 
       // first get image path

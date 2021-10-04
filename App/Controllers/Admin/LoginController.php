@@ -8,8 +8,10 @@ class LoginController extends Controller
     public function index()
     {
         $loginmodel = $this->load->model("login");
-        if($loginmodel->isLogin())
+        $tablename = "supervisors";
+        if($loginmodel->isLogin($tablename))
         {
+            
             $this->url->header("admin");
         }
               // all css 
@@ -57,7 +59,7 @@ class LoginController extends Controller
         $valid =  (bool) $this->validator
                         ->require("email")
                         ->email("email")
-                        ->isVerified(["email","users" , "verified" , 0])
+                        ->isVerified(["email","supervisors" , "verified" , 0])
                         ->require("password")
                         ->valid();            
         if($valid == false)
@@ -70,7 +72,8 @@ class LoginController extends Controller
             $email = $this->request->post('email');
             $password = $this->request->post('password');
             $loginmodel = $this->load->model("login");
-            $user = $loginmodel->checkValidLoginUser($email , $password);
+            $tablename = "supervisors";
+            $user = $loginmodel->checkValidLoginUser($email , $password , $tablename);
             
             if($user)
             {

@@ -11,13 +11,13 @@
       </div>
       <div class="modal-body">
         <form class="edit-form">
-        <div class="form-group">
+                <div class="form-group">
                     <label for="area_id"> Area Id</label>
                     <input class="form-control" type="text" name="area_id" id="area_id" value="<?= $area_group->area_id?>">
                 </div>
                 <div class="result area-id"></div>
                 <div class="form-group" style="margin: 20px 0 0 0;">
-                <label for="area_name"> Area Name</label>
+                    <label for="area_name"> Area Name</label>
                     <input class="form-control" type="text" name="area_name" id="area_name"
                     value="<?= $area_group->area_name?>"
                     >

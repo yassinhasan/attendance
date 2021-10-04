@@ -15,6 +15,6 @@ class LogoutController extends Controller
         {
             $this->session->remove("logincode");
         }
-        $this->url->header("admin/login");
+        $this->url->header("/");
     }
 }

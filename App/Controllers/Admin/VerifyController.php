@@ -8,10 +8,25 @@ class VerifyController extends Controller
     public function index()
     {
         $this->html->setTitle("verify");
-        $this->html->setCss("admin/css/verify");
-        $this->html->setJs("admin/js/verify");
+        $this->html->setCss([
+            "admin/css/all.min.css",
+            "admin/css/bootstrap.css.map",
+            "admin/css/bootstrap.min.css",
+            "admin/css/fontawesome.min.css",
+            "admin/css/verify.css",
+          ]);  
+          $this->html->setJs([
+            "admin/js/jquery.min.js",
+            "admin/js/jquery.min.js",
+            "admin/js/bootstrap.min.js",
+            "admin/js/all.min.js",
+            "admin/js/fontawesome.min.js",
+            "admin/js/verify.js"
+          ]);
+
+
         $data['action'] = toLink("admin/verify/submit");
-        echo  $this->layout->render($this->view->render("admin\\verify",$data));
+        echo  $this->layout->render($this->view->render("admin/verify",$data) , ["nav"]);
         /////////////
     }
 
@@ -31,7 +46,7 @@ class VerifyController extends Controller
         if($this->isValid())
         {
             
-            if($usermode->verify())
+            if($usermode->verify("supervisors"))
             {
                 $this->json['suc'] = ' Account Verfied Successfully ';
             }else

@@ -8,12 +8,11 @@ class LoginModel extends Model
     {
         use Filter;
         protected $user;
-        protected $table_name = "users";
         
-        public function checkValidLoginUser($email , $password)
+        public function checkValidLoginUser($email , $password , $tablename)
         {
             $user = $this->select('*')
-                         ->where( 'email = ? AND verified = ? ',$email , 1)->fetch($this->table_name);                
+                         ->where( 'email = ? AND verified = ? ',$email , 1)->fetch($tablename);                
 
             if($user)
             {
@@ -27,7 +26,7 @@ class LoginModel extends Model
             return $this->user;
         }
 
-        public function isLogin()
+        public function isLogin($tablename)
         {
             $logincode = "";
             if($this->cookie->has("logincode"))
@@ -39,7 +38,7 @@ class LoginModel extends Model
                 $logincode = $this->session->get("logincode");
             }
             $user = $this->select('*')
-            ->where( 'logincode = ? ',$logincode)->fetch($this->table_name);  
+            ->where( 'logincode = ? ',$logincode)->fetch($tablename);  
             if($user)
             {
                 $this->user = $user;

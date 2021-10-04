@@ -5,8 +5,10 @@ use System\Controller;
 
 class LogoutController extends Controller
 {
+
+  
     public function index()
-    {
+    {  
         if($this->cookie->has("logincode"))
         {
             $this->cookie->remove("logincode");
@@ -15,6 +17,6 @@ class LogoutController extends Controller
         {
             $this->session->remove("logincode");
         }
-        $this->url->header("users/login");
+        $this->url->header("/");
     }
 }

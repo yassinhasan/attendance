@@ -8,10 +8,11 @@ class LoginController extends Controller
     public function index()
     {
         $loginmodel = $this->load->model("login");
-        if($loginmodel->isLogin())
+        $tablename = "users";
+        if($loginmodel->isLogin("users") OR $loginmodel->isLogin("supervisors") )
         {
             
-            $this->url->header("/");
+           $this->url->header("usershome") ;
         }
         $this->html->setTitle("login");
 
@@ -60,7 +61,8 @@ class LoginController extends Controller
             $email = $this->request->post('email');
             $password = $this->request->post('password');
             $loginmodel = $this->load->model("login");
-            $user = $loginmodel->checkValidLoginUser($email , $password);
+            $tablename = "users";
+            $user = $loginmodel->checkValidLoginUser($email , $password ,$tablename);
             
             if($user)
             {
@@ -75,7 +77,7 @@ class LoginController extends Controller
                     $this->session->set("logincode" , $logeduser->logincode);
                 }
                 $this->json['suc'] = $loginmodel->user();
-                $this->json['redirect'] = toLink("/");
+                $this->json['redirect'] = toLink("/usershome");
             }
             else
             {

@@ -82,9 +82,10 @@
                     <input class="form-control" type="text" name="area_id" id="area_id">
                 </div>
                 <div class="result area-id"></div>
+
                 <div class="form-group" style="margin: 20px 0 0 0;">
-                <label for="area_name"> Area Name</label>
-                    <input class="form-control" type="text" name="area_name" id="area_name">
+                      <label for="area_name"> Area Name</label>
+                     <input class="form-control" type="text" name="area_name" id="area_name">
                 </div>
                 <div class="result area-name"></div>
             </form>

@@ -57,7 +57,6 @@ submit_btn.addEventListener("click",(e)=>
             {
                 if(data.error)
                 {
-                    console.log(data.error)
                     if(data.error.group_id)
                     {
                         document.querySelector(".group_id").classList.add("alert" , "alert-danger");
@@ -321,7 +320,7 @@ function edit(el)
                       method: "POST"
                   }).then(resp=>resp.text())
                   .then(data=>{
-                     removespinner()
+                    removespinner()
                     let html = new DOMParser();
                     let elm =  html.parseFromString(data, "text/html");
                     let model = elm.getElementById("editmodal");
@@ -331,9 +330,6 @@ function edit(el)
                     $('#editmodal').modal('show');
                      update(model.querySelector(".save_btn") , edit_form)
                     })  
-                    
-                    
-
                   .catch(error=>console.log(error))
             })
             
@@ -364,7 +360,7 @@ function update(elmenet , edit_form)
                          loadspinner();
                          if(data.error)
                          {
-                             removespinner();
+                            
                              if(data.error.group_id)
                              {
                                  document.querySelector(".group_id").classList.add("alert" , "alert-danger");
@@ -375,10 +371,10 @@ function update(elmenet , edit_form)
                                  document.querySelector(".permession_name").classList.add("alert" , "alert-danger");
                                  document.querySelector(".permession_name").innerHTML = "sorry you must choose permession  name";
                              }
+                             removespinner();
                          }
                         if(data.suc)
                         {
-                             removespinner()
                             Swal.fire({
                                 title: 'success',
                                 text:  data.suc,
@@ -389,6 +385,7 @@ function update(elmenet , edit_form)
                               fetchdata(load_data)
                               $('#editmodal').modal('toggle');
                         }
+                        removespinner();
 
                     })
                     
