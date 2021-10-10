@@ -3,14 +3,14 @@ namespace App\Controllers\Admin;
 
 use System\Controller;
 
-class SupervisorsController extends Controller
+class PharmacistsController extends Controller
 {
 
     public function index()
     {
 
      // title
-      $this->html->setTitle("supervisors");
+      $this->html->setTitle("pharmacists");
 
       // favicon
       // first get image path
@@ -35,7 +35,7 @@ class SupervisorsController extends Controller
         "admin/css/bootstrap.min.css",
         "admin/css/fontawesome.min.css",
         "admin/css/main.css",
-        "admin/css/supervisors.css",
+        "admin/css/pharmacists.css",
       ]);  
       $this->html->setJs([
         "admin/js/jquery.min.js",
@@ -44,22 +44,22 @@ class SupervisorsController extends Controller
         "admin/js/all.min.js",
         "admin/js/fontawesome.min.js",
         "admin/js/main.js",
-        "admin/js/supervisors.js"
+        "admin/js/pharmacists.js"
       ]);
 
    
-      // load all supervisors
-      $supervisorsmodel = $this->load->model("Supervisors"); 
-      $data['allarea'] = $supervisorsmodel->getAllArea();
-      $data['custom_add'] = ' Supervisors';
-      $data['action']     =  toLink("admin/supervisors/submit");
-      $data['load_data']  =  toLink("admin/supervisors/realtime");
-      $data['edit_data']  =  toLink("admin/supervisors/edit/");
-      $data['delete_data']  =  toLink("admin/supervisors/delete/");
-      $data['show_data']  =  toLink("admin/supervisors/preview/");
-      $data['delete_download']  =  toLink("admin/supervisors/download");
+      // load all pharmacists
+      $pharmacistsmodel = $this->load->model("pharmacists"); 
+      $data['allpharmacies'] = $pharmacistsmodel->getAllPharmacies();
+      $data['custom_add'] = ' Pharmacists';
+      $data['action']     =  toLink("admin/pharmacists/submit");
+      $data['load_data']  =  toLink("admin/pharmacists/realtime");
+      $data['edit_data']  =  toLink("admin/pharmacists/edit/");
+      $data['delete_data']  =  toLink("admin/pharmacists/delete/");
+      $data['show_data']  =  toLink("admin/pharmacists/preview/");
+      $data['delete_download']  =  toLink("admin/pharmacists/download");
 
-      echo  $this->layout->render($this->view->render("admin\supervisors",$data));
+      echo  $this->layout->render($this->view->render("admin\pharmacists",$data));
     }
 
 
@@ -75,11 +75,11 @@ class SupervisorsController extends Controller
           else
           {
               
-              $supervisorsmodel = $this->load->model("supervisors");
-              if($supervisorsmodel->insertWithOutVervication("supervisors"))
+              $pharmacistsmodel = $this->load->model("pharmacists");
+              if($pharmacistsmodel->insertWithOutVervication("users"))
               {
                   $this->json['suc'] =  'Data inserted successfuly ';
-                  $this->json['suc_url'] = toLink("admin/supervisors/realtime");
+                  $this->json['suc_url'] = toLink("admin/pharmacists/realtime");
               }else
               {
                   $this->json['db_error'] = 'sorry this user is found before';
@@ -92,22 +92,23 @@ class SupervisorsController extends Controller
   
       public function isValid($id = null)
       {
-        //id	supervisors_id	supervisors_name	supervisors_email	supervisors_password	area_id	group_id	date_of_join	supervisors_image	
+        //	id	users_id	firstname	lastname	email	image	status	group_id	pharmacy_id	logintime	logincode	password	verified	verified_code	
+
         if($id == null)
         {
         return $this->validator
-                        ->require("supervisors_id")
-                        ->exists(["supervisors_id","supervisors"])
-                        ->existsInAnother(["supervisors_id","users_id" , "users"]) // 
-                        ->isInt("supervisors_id")
+                        ->require("users_id")
+                        ->exists(["users_id","users"])
+                        ->existsInAnother(["users_id","supervisors_id" , "supervisors"]) // 
+                        ->isInt("users_id")
                         ->require("firstname")
                         ->require("lastname")
                         ->require("email")
-                        ->require("area_id")
-                        ->exists(["area_id","supervisors"])
+                        ->require("pharmacy_id")
                         ->email("email")
-                        ->exists(["email","supervisors" , "verified" , 0])
-                        ->isVerified(["email","supervisors" , "verified" , 0])
+                        ->exists(["email","users" , "verified" , 0])
+                        ->existsInAnother(["email","email" , "supervisors"]) 
+                        ->isVerified(["email","users" , "verified" , 0])
                         ->require("password")
                         ->image("image")
                         ->valid();
@@ -116,13 +117,13 @@ class SupervisorsController extends Controller
             return $this->validator
             ->require("firstname")
             ->require("lastname")
-            ->oldPassword(["password" , "supervisors" , "id" , $id])
+            ->oldPassword(["password" , "users" , "id" , $id])
             ->MatchOldPassword("password" , "newpassword", "confirmpassword")
             ->require("email")
             ->email("email")
             ->require("pharmacy_id")
-            ->exists(["email","supervisors" , "email" , $this->request->post("email")])
-            ->isVerified(["email","supervisors" , "verified" , 0])
+            ->exists(["email","users" , "email" , $this->request->post("email")])
+            ->isVerified(["email","users" , "verified" , 0])
             ->valid();
         }
 
@@ -134,8 +135,8 @@ class SupervisorsController extends Controller
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-        $supervisorsmodel = $this->load->model("supervisors");
-        $results =  $supervisorsmodel->getAll();
+        $pharmacistsmodel = $this->load->model("pharmacists");
+        $results =  $pharmacistsmodel->getAll();
 
         $count =  count($results['allwithoutlimit']);
 
@@ -144,21 +145,22 @@ class SupervisorsController extends Controller
          $this->json['total'] = ceil($count / $limit); 
         return $this->json();
       }
+
+
       public function edit($id)
       {
         $id = $id[0];
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-        $supervisorsmodel = $this->load->model("Supervisors"); 
-        $data['allarea'] = $supervisorsmodel->getAllArea();
-        $data['selected'] =  $supervisorsmodel-> getById($id);
-        $data['action']     =  toLink("admin/supervisors/save/$id");
-        $data['custom_add'] = ' Supervisors';
-        $supervisorsmodel = $this->load->model("supervisors");
-        $data['supervisors_group'] = $supervisorsmodel->getById($id[0]);
-
-        return $this->view->render("admin/forms/supervisorsform",$data);
+        $pharmacistsmodel = $this->load->model("pharmacists"); 
+        $data['allpharmacies'] = $pharmacistsmodel->getAllPharmacies();
+        $data['selected'] =  $pharmacistsmodel-> getById($id);
+        $data['action']     =  toLink("admin/pharmacists/save/$id");
+        $data['custom_add'] = ' Pharmacists';
+        $pharmacistsmodel = $this->load->model("pharmacists");
+        $data['pharmacists_group'] = $pharmacistsmodel->getById($id[0]);
+        return $this->view->render("admin/forms/pharmacistsform",$data);
 
       }
       public function preview($id)
@@ -167,12 +169,12 @@ class SupervisorsController extends Controller
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-        $supervisorsmodel = $this->load->model("Supervisors"); 
-        $data['allarea'] = $supervisorsmodel->getAllArea();
-        $data['selected'] =  $supervisorsmodel-> previewById($id);
-        $data['action']     =  toLink("admin/supervisors/preview/$id");
-        $supervisorsmodel = $this->load->model("supervisors");
-        $data['supervisors_group'] = $supervisorsmodel->getById($id[0]);
+        $pharmacistsmodel = $this->load->model("pharmacists"); 
+        $data['allarea'] = $pharmacistsmodel->getAllArea();
+        $data['selected'] =  $pharmacistsmodel-> previewById($id);
+        $data['action']     =  toLink("admin/pharmacists/preview/$id");
+        $pharmacistsmodel = $this->load->model("pharmacists");
+        $data['pharmacists_group'] = $pharmacistsmodel->getById($id[0]);
         return $this->view->render("admin/forms/preview",$data);
 
       }
@@ -191,8 +193,8 @@ class SupervisorsController extends Controller
            $this->json['error'] = $this->validator->getAllErrors();
         }else 
         { 
-            $supervisorsgroupodel = $this->load->model("supervisors");
-            if($supervisorsgroupodel->update($id))
+            $pharmacistsgroupodel = $this->load->model("pharmacists");
+            if($pharmacistsgroupodel->update($id))
              {
                $this->json['suc'] = 'updated succsuffuly';
              }else
@@ -211,8 +213,8 @@ class SupervisorsController extends Controller
           $this->url->header("/");
         }
         $id = $id[0];
-        $supervisorsgroupodel = $this->load->model("supervisors");
-        if($supervisorsgroupodel->deleteById($id))
+        $pharmacistsgroupodel = $this->load->model("pharmacists");
+        if($pharmacistsgroupodel->deleteById($id))
         {
           $this->json['suc'] = 'data deleted';
         }
@@ -225,15 +227,15 @@ class SupervisorsController extends Controller
           //   $this->url->header("/");
           // }
 
-          $supervisorsgroupodel = $this->load->model("supervisors");
-          $results  = $supervisorsgroupodel->getAll();
+          $pharmacistsgroupodel = $this->load->model("pharmacists");
+          $results  = $pharmacistsgroupodel->getAll();
 
           $output = "";
 
           $output .= "<table class='table' bordered='1'>
                       <thead>
-                      <tr> <th> Supervisors Id</th> </tr>
-                      <tr> <th> Supervisors Name </th> </tr>
+                      <tr> <th> Pharmacists Id</th> </tr>
+                      <tr> <th> Pharmacists Name </th> </tr>
                       </thead>
                       <tbody>
                       ";
@@ -241,10 +243,10 @@ class SupervisorsController extends Controller
           {
                $output .= "<tr>
                                 <td>
-                                $result->supervisors_id
+                                $result->pharmacists_id
                                 </td>
                                 <td>
-                                $result->supervisors_name
+                                $result->pharmacists_name
                                </td>
                         </tr>";
           }

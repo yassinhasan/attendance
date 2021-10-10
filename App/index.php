@@ -51,6 +51,7 @@ $app->route->addRoute("admin","Admin/Home");
    $app->route->addRoute("admin/usersgroups/search","Admin/Usersgroups@search" , "POST");
    $app->route->addRoute("admin/usersgroups/download","Admin/Usersgroups@download" , "POST");
 
+   $app->route->addRoute("admin/pharmacies","Admin/Pharmacies");
 
    // area groups
 
@@ -63,16 +64,16 @@ $app->route->addRoute("admin","Admin/Home");
    $app->route->addRoute("admin/areagroups/search","Admin/Areagroups@search" , "POST");
    $app->route->addRoute("admin/areagroups/download","Admin/Areagroups@download" , "POST");
 
-   // areasupervisors
+   // pharmacies
 
-   $app->route->addRoute("admin/areasupervisors","Admin/Areasupervisors");
-   $app->route->addRoute("admin/areasupervisors/submit","Admin/Areasupervisors@submit");
-   $app->route->addRoute("admin/areasupervisors/edit/:id","Admin/Areasupervisors@edit","POST");
-   $app->route->addRoute("admin/areasupervisors/save/:id","Admin/Areasupervisors@save","POST");
-   $app->route->addRoute("admin/areasupervisors/delete/:id","Admin/Areasupervisors@delete","POST");
-   $app->route->addRoute("admin/areasupervisors/realtime","Admin/Areasupervisors@realtime" , "POST");
-   $app->route->addRoute("admin/areasupervisors/search","Admin/Areasupervisors@search" , "POST");
-   $app->route->addRoute("admin/areasupervisors/download","Admin/Areasupervisors@download" , "POST");
+   $app->route->addRoute("admin/pharmacies","Admin/Pharmacies");
+   $app->route->addRoute("admin/pharmacies/submit","Admin/Pharmacies@submit");
+   $app->route->addRoute("admin/pharmacies/edit/:id","Admin/Pharmacies@edit","POST");
+   $app->route->addRoute("admin/pharmacies/save/:id","Admin/Pharmacies@save","POST");
+   $app->route->addRoute("admin/pharmacies/delete/:id","Admin/Pharmacies@delete","POST");
+   $app->route->addRoute("admin/pharmacies/realtime","Admin/Pharmacies@realtime" , "POST");
+   $app->route->addRoute("admin/pharmacies/search","Admin/Pharmacies@search" , "POST");
+   $app->route->addRoute("admin/pharmacies/download","Admin/Pharmacies@download" , "POST");
 
    // supervisors 
 
@@ -85,6 +86,19 @@ $app->route->addRoute("admin","Admin/Home");
    $app->route->addRoute("admin/supervisors/realtime","Admin/Supervisors@realtime" , "POST");
    $app->route->addRoute("admin/supervisors/search","Admin/Supervisors@search" , "POST");
    $app->route->addRoute("admin/supervisors/download","Admin/Supervisors@download" , "POST");
+
+
+   // pharmacists 
+
+   $app->route->addRoute("admin/pharmacists","Admin/Pharmacists");
+   $app->route->addRoute("admin/pharmacists/submit","Admin/Pharmacists@submit");
+   $app->route->addRoute("admin/pharmacists/edit/:id","Admin/Pharmacists@edit","POST");
+   $app->route->addRoute("admin/pharmacists/preview/:id","Admin/Pharmacists@preview","POST");
+   $app->route->addRoute("admin/pharmacists/save/:id","Admin/Pharmacists@save","POST");
+   $app->route->addRoute("admin/pharmacists/delete/:id","Admin/Pharmacists@delete","POST");
+   $app->route->addRoute("admin/pharmacists/realtime","Admin/Pharmacists@realtime" , "POST");
+   $app->route->addRoute("admin/pharmacists/search","Admin/Pharmacists@search" , "POST");
+   $app->route->addRoute("admin/pharmacists/download","Admin/Pharmacists@download" , "POST");
 
    
 

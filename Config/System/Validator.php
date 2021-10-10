@@ -218,7 +218,7 @@ class Validator
             if($result != null)
             {
                 $message = $message !== null ? $message : sprintf("sorry  %s is exists by %s ",$columnname , $table_name);
-                $this->message($coulmn,$message);
+                $this->message($columnname,$message);
             }
         }
 

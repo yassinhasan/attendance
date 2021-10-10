@@ -3,14 +3,14 @@ namespace App\Controllers\Admin;
 
 use System\Controller;
 
-class AreasupervisorsController extends Controller
+class PharmaciesController extends Controller
 {
 
     public function index()
     {
 
      // title
-      $this->html->setTitle("Areasupervisors");
+      $this->html->setTitle("Pharmacies");
 
       // favicon
       // first get image path
@@ -20,19 +20,20 @@ class AreasupervisorsController extends Controller
       $file = file_get_contents($image_src);
       $icon = "data:image/".$type.";base64, ".base64_encode($file);
 
-
       $this->html->setCdn("favicon","<link rel='icon' 
       type='image/png' 
       href='$icon'>");
       // all js files
+
       $this->html->setCss([
         "admin/css/all.min.css",
         "admin/css/bootstrap.css.map",
         "admin/css/bootstrap.min.css",
         "admin/css/fontawesome.min.css",
         "admin/css/main.css",
-        "admin/css/areasupervisors.css",
+        "admin/css/pharmacies.css",
       ]);  
+          
       $this->html->setJs([
         "admin/js/jquery.min.js",
         "admin/js/jquery.min.js",
@@ -40,22 +41,23 @@ class AreasupervisorsController extends Controller
         "admin/js/all.min.js",
         "admin/js/fontawesome.min.js",
         "admin/js/main.js",
-        "admin/js/areasupervisors.js"
+        "admin/js/pharmacies.js"
       ]);
 
-   
-      // load all area groups
-      $areasupervisorsmodel = $this->load->model("areasupervisors");
-      $data['allsupervisors'] = $areasupervisorsmodel->getSupervisors();
-      $data['allarea'] = $areasupervisorsmodel->getAllArea();
-      $data['custom_add'] = ' areasupervisors';
-      $data['action']     =  toLink("admin/areasupervisors/submit");
-      $data['load_data']  =  toLink("admin/areasupervisors/realtime");
-      $data['edit_data']  =  toLink("admin/areasupervisors/edit/");
-      $data['delete_data']  =  toLink("admin/areasupervisors/delete/");
-      $data['delete_download']  =  toLink("admin/areasupervisors/download");
 
-      echo  $this->layout->render($this->view->render("admin\areasupervisors",$data));
+    //  load all area groups
+      $pharmaciesmodel = $this->load->model("pharmacies");
+      $data['allsupervisors'] = $pharmaciesmodel->getSupervisors();
+      $data['allarea'] = $pharmaciesmodel->getAllArea();
+      $data['custom_add'] = ' pharmacies';
+      $data['action']     =  toLink("admin/pharmacies/submit");
+      $data['load_data']  =  toLink("admin/pharmacies/realtime");
+      $data['edit_data']  =  toLink("admin/pharmacies/edit/");
+      $data['delete_data']  =  toLink("admin/pharmacies/delete/");
+      $data['delete_download']  =  toLink("admin/pharmacies/download");
+
+
+      echo  $this->layout->render($this->view->render("admin\pharmacies",$data));
     }
 
 
@@ -71,16 +73,16 @@ class AreasupervisorsController extends Controller
           else
           {
               
-              $areasupervisorsmodel = $this->load->model("areasupervisors");
-              if($areasupervisorsmodel->insert())
+              $pharmaciesmodel = $this->load->model("pharmacies");
+              if($pharmaciesmodel->insert())
               {
                   $this->json['suc'] =  'Data inserted successfuly ';
-                  $this->json['suc_url'] = toLink("admin/areasupervisors/realtime");
+                  $this->json['suc_url'] = toLink("admin/pharmacies/realtime");
                                   
   
               }else
               {
-                  $this->json['db_error'] = 'sorry this area id or supervisor id is found before';
+                  $this->json['db_error'] = 'sorry this PHARMACY is found before';
               }
           }
           return $this->json();
@@ -91,8 +93,8 @@ class AreasupervisorsController extends Controller
       public function isValid()
       {
           return $this->validator->require("area_id")
-                          ->require("supervisors_id")
-                          ->isInt("supervisors_id")
+                          ->require("pharmacies_id")
+                          ->isInt("pharmacies_id")
                           ->valid();
                          
       }
@@ -102,8 +104,8 @@ class AreasupervisorsController extends Controller
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-        $areasupervisorsmodel = $this->load->model("areasupervisors");
-        $results =  $areasupervisorsmodel->getAll();
+        $pharmaciesmodel = $this->load->model("pharmacies");
+        $results =  $pharmaciesmodel->getAll();
 
         $count =  count($results['allwithoutlimit']);
 
@@ -118,15 +120,15 @@ class AreasupervisorsController extends Controller
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
-        $areasupervisorsmodel = $this->load->model("areasupervisors");
-        $data['allsupervisors'] = $areasupervisorsmodel->getSupervisors();
-        $data['allarea'] = $areasupervisorsmodel->getAllArea();
-        $data['selected'] =  $areasupervisorsmodel-> getById($id);
-        $data['action']     =  toLink("admin/areasupervisors/save/$id");
-        $data['custom_add'] = ' areasupervisors ';
-        $areasupervisorsmodel = $this->load->model("areasupervisors");
-        $data['area_group'] = $areasupervisorsmodel->getById($id[0]);
-        return $this->view->render("admin/forms/areasupervisorsform",$data);
+        $pharmaciesmodel = $this->load->model("pharmacies");
+        $data['allsupervisors'] = $pharmaciesmodel->getSupervisors();
+        $data['allarea'] = $pharmaciesmodel->getAllArea();
+        $data['selected'] =  $pharmaciesmodel-> getById($id);
+        $data['action']     =  toLink("admin/pharmacies/save/$id");
+        $data['custom_add'] = ' pharmacies ';
+        $pharmaciesmodel = $this->load->model("pharmacies");
+        $data['area_group'] = $pharmaciesmodel->getById($id[0]);
+        return $this->view->render("admin/forms/pharmaciesform",$data);
 
       }
 
@@ -144,8 +146,8 @@ class AreasupervisorsController extends Controller
            $this->json['error'] = $this->validator->getAllErrors();
         }else 
         { 
-            $areasupervisorsmodel = $this->load->model("areasupervisors");
-            if($areasupervisorsmodel->update($id))
+            $pharmaciesmodel = $this->load->model("pharmacies");
+            if($pharmaciesmodel->update($id))
              {
                $this->json['suc'] = 'updated succsuffuly';
              }else
@@ -164,8 +166,8 @@ class AreasupervisorsController extends Controller
           $this->url->header("/");
         }
         $id = $id[0];
-        $areasupervisorsmodel = $this->load->model("areasupervisors");
-        if($areasupervisorsmodel->deleteById($id))
+        $pharmaciesmodel = $this->load->model("pharmacies");
+        if($pharmaciesmodel->deleteById($id))
         {
           $this->json['suc'] = 'data deleted';
         }
@@ -174,19 +176,16 @@ class AreasupervisorsController extends Controller
 
       public function download()
       {
-          // if(! $this->route->isMatchedMethod()){
-          //   $this->url->header("/");
-          // }
 
-          $areasupervisorsmodel = $this->load->model("areasupervisors");
-          $results  = $areasupervisorsmodel->getAll();
+          $pharmaciesmodel = $this->load->model("pharmacies");
+          $results  = $pharmaciesmodel->getAll();
 
           $output = "";
 
           $output .= "<table class='table' bordered='1'>
                       <thead>
                       <tr> <th> Area Id</th> </tr>
-                      <tr> <th> Supervisor Name </th> </tr>
+                      <tr> <th> Pharmacy Name </th> </tr>
                       </thead>
                       <tbody>
                       ";
@@ -197,7 +196,7 @@ class AreasupervisorsController extends Controller
                                 $result->area_id
                                 </td>
                                 <td>
-                                $result->supervisors_id
+                                $result->pharmacies_id
                                </td>
                         </tr>";
           }

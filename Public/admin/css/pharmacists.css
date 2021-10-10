@@ -15,6 +15,10 @@
     justify-content: space-between;
    
 }
+tbody tr td
+{
+    vertical-align: middle !important ;
+}
 .table-img-div
 {
     display: flex;
@@ -75,12 +79,9 @@
 }
 .th-action
 {
-    min-width: 175px;
+    min-width: 200px;
 }
-tbody tr td
-{
-    vertical-align: middle !important ;
-}
+
 .edit,.delete ,.preview
 {
     text-align: center;

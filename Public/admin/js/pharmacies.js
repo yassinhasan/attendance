@@ -24,7 +24,7 @@ add_new_btn.addEventListener("click",()=>
 {
 
     clearResultError(result)
-    $('#areasupervisors').modal('toggle');
+    $('#pharmacies').modal('toggle');
 })
 
 //  on load
@@ -62,10 +62,10 @@ submit_btn.addEventListener("click",(e)=>
                         document.querySelector(".area-id").classList.add("alert" , "alert-danger");
                         document.querySelector(".area-id").innerHTML = data.error.area_id;
                     }
-                    if(data.error.supervisors_id)
+                    if(data.error.pharmacies_id)
                     {
-                        document.querySelector(".supervisors-id").classList.add("alert" , "alert-danger");
-                        document.querySelector(".supervisors-id").innerHTML = data.error.supervisors_id;
+                        document.querySelector(".pharmacies-id").classList.add("alert" , "alert-danger");
+                        document.querySelector(".pharmacies-id").innerHTML = data.error.pharmacies_id;
                     }
                     removespinner()
                 }
@@ -79,7 +79,7 @@ submit_btn.addEventListener("click",(e)=>
                         showConfirmButton: false,
                         timer: 1200
                       })
-                      $('#areasupervisors').modal('toggle');  
+                      $('#pharmacies').modal('toggle');  
                       removespinner()
                 }
                 if(data.db_error)
@@ -298,7 +298,7 @@ function makeTable(results)
                             ${results[index].area_name}
                             </td>
                             <td>
-                                ${results[index].firstname} ${results[index].lastname}
+                                PH-${results[index].pharmacies_id}
                             </td>
                         <td class='action'>
                             <button data-href="${edit_data}${results[index].id}" class="btn btn-primary edit "
@@ -394,10 +394,10 @@ function update(elmenet , edit_form)
                                 document.querySelector(".area-id").classList.add("alert" , "alert-danger");
                                 document.querySelector(".area-id").innerHTML = data.error.area_id;
                             }
-                            if(data.error.supervisors_id)
+                            if(data.error.pharmacies_id)
                             {
-                                document.querySelector(".supervisors-id").classList.add("alert" , "alert-danger");
-                                document.querySelector(".supervisors-id").innerHTML = data.error.supervisors_id;
+                                document.querySelector(".pharmacies-id").classList.add("alert" , "alert-danger");
+                                document.querySelector(".pharmacies-id").innerHTML = data.error.pharmacies_id;
                             }vespinner();  
                          }  
                         if(data.suc)

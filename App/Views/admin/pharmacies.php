@@ -1,7 +1,7 @@
 <div class="table-center">
   
     <h2 class="text-center heading">
-        Area Group 
+        pharmacies  
     </h2>
 
     <div class="table-items">
@@ -46,7 +46,7 @@
                     Area ID
                 </th>
                 <th>
-                    supervisor id
+                    pharmacie Name
                 </th>
                 <th>
                     Action
@@ -64,7 +64,7 @@
   </ul>
 </nav>
 
-<div class="modal"  id="areasupervisors">  
+<div class="modal"  id="pharmacies">  
     <!-- modal form must have id=""  equal to data-target in button -->
     <div class="modal-dialog modal-dialog-centered" tabindex="-1">
     <div class="modal-dialog">
@@ -91,19 +91,35 @@
                 </div>
                 <div class="result area-id"></div>
                 <div class="form-group" style="margin: 20px 0 0 0;">
-                    <label for="supervisors"> choose supervisors</label>
-                    <select name="supervisors_id" class="form-control">
-                    <option value="" selected> choose supervisor </option>
+                    <label for="pharmacies"> choose pharmacies</label>
+                    <select name="pharmacies_id" class="form-control">
+                    <option value="" selected> choose pharmacie </option>
                         <?php
-                          foreach($allsupervisors as $supervisor)
-                          { ?>
-                            <option value="<?= $supervisor->supervisors_id ?>"> <?= $supervisor->firstname." ".$supervisor->lastname ?> </option>
-                          <?php }
+
+                        for ($i=1; $i < 1000; $i++) { 
+                            { 
+                                $p = "";
+                                if($i < 10)
+                                {
+                                    $p = "000".$i;
+                                }
+                                if($i >= 10 AND  $i < 100)
+                                {
+                                    $p = "00".$i;
+                                }
+                                if($i >= 100 AND  $i < 1000)
+                                {
+                                    $p = "0".$i;
+                                }
+                                ?>
+                                <option value="<?= $i?>"> <?= "PH-$p" ?> </option>
+                         <?php }
+                        }
                         ?>
                       
                     </select>
                 </div>
-                <div class="result supervisors-id"></div>
+                <div class="result pharmacies-id"></div>
             </form>
         </div>
         <div class="modal-footer custom-footer">
