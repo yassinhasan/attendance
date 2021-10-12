@@ -11,7 +11,22 @@
       <li class="nav-item">
         <a class="nav-link" href="<?= toLink("admin/usersgroups") ?>" data-target="usersgroups">User Groups <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <!--  -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Manger Area
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="<?= toLink("admin/areagroups") ?>" data-target="areagroups">Area Groups <span class="sr-only">(current)</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="<?= toLink("admin/pharmacies") ?>" data-target="pharmacies"> pharmacies <span class="sr-only">(current)</span></a>
+            <a class="dropdown-item" href="<?= toLink("admin/supervisors") ?>" data-target="supervisors">Supervisors <span class="sr-only">(current)</span></a>
+            <a class="dropdown-item" href="<?= toLink("admin/pharmacists") ?>" data-target="supervisors">Pharmacists <span class="sr-only">(current)</span></a>
+
+        </div>
+      </li>
+
+      <!-- <li class="nav-item">
         <a class="nav-link" href="<?= toLink("admin/areagroups") ?>" data-target="areagroups">Area Groups <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
@@ -22,15 +37,15 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<?= toLink("admin/pharmacists") ?>" data-target="supervisors">Pharmacists <span class="sr-only">(current)</span></a>
-      </li>
+      </li> -->
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         <?= ucfirst( $user->firstname).ucfirst($user->lastname) ?>
+        <?= ucfirst( $user->firstname)." ".ucfirst($user->lastname) ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="<?= toLink("admin/profile") ?>">Edit Profile</a>
+          <a class="dropdown-item" href="<?= toLink("admin/password") ?>">Change Password </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?=toLink("admin/logout")  ?>">LOG OUT</a>
         </div>

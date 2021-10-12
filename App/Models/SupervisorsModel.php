@@ -88,9 +88,7 @@ class SupervisorsModel extends Model
 
     public function update($id)
         {
-        
-        
-            
+   
         if($_FILES['image']['name'] == "")
         {
             $image = $this->getById($id)->image;

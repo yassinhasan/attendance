@@ -15,15 +15,16 @@
                   <div class="form-group col-6" style="margin: 20px 0 0 0;">
                       <label for="firstname"> Supervisors Firtname</label>
                       <input class="form-control" type="text" name="firstname" id="firstname" value="<?= $selected->firstname?>">
+                      <div class="result firstname"></div>
                   </div>
-                  <div class="result firstname"></div>
                   <!--  -->
                   <!--  -->
                   <div class="form-group col-6" style="margin: 20px 0 0 0;">
                       <label for="lastname"> Supervisors lastname</label>
-                      <input class="form-control" type="text" name="lastname" id="lastname" value="<?= $selected->lastname?>">
+                      <input class="form-control" type="text" name="lastname" id="lastname" value="<?= $selected->lastname?>">  
+                     <div class="result lastname"></div>
                   </div>
-                  <div class="result lastname"></div>
+
                 </div>
                 <!--  -->
                 <div class="form-group">

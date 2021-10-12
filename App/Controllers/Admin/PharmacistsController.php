@@ -170,12 +170,11 @@ class PharmacistsController extends Controller
           $this->url->header("/");
         }
         $pharmacistsmodel = $this->load->model("pharmacists"); 
-        $data['allarea'] = $pharmacistsmodel->getAllArea();
+        $data['allpharmacies'] = $pharmacistsmodel->getAllPharmacies();
         $data['selected'] =  $pharmacistsmodel-> previewById($id);
         $data['action']     =  toLink("admin/pharmacists/preview/$id");
-        $pharmacistsmodel = $this->load->model("pharmacists");
         $data['pharmacists_group'] = $pharmacistsmodel->getById($id[0]);
-        return $this->view->render("admin/forms/preview",$data);
+        return $this->view->render("admin/forms/pharmacistpreview",$data);
 
       }
 
@@ -227,26 +226,27 @@ class PharmacistsController extends Controller
           //   $this->url->header("/");
           // }
 
-          $pharmacistsgroupodel = $this->load->model("pharmacists");
-          $results  = $pharmacistsgroupodel->getAll();
+          $pharmacistsmodel = $this->load->model("pharmacists");
+          $results =  $pharmacistsmodel->getAll();
 
           $output = "";
 
           $output .= "<table class='table' bordered='1'>
                       <thead>
-                      <tr> <th> Pharmacists Id</th> </tr>
-                      <tr> <th> Pharmacists Name </th> </tr>
+                      <tr> <th> Pharmacists Id</th>
+                      <th> Pharmacists Name </th> </tr>
                       </thead>
                       <tbody>
                       ";
-          foreach($results as $result)
+                    
+          foreach($results['allwithlimit'] as $result)
           {
                $output .= "<tr>
                                 <td>
-                                $result->pharmacists_id
+                                $result->users_id
                                 </td>
                                 <td>
-                                $result->pharmacists_name
+                                $result->firstname
                                </td>
                         </tr>";
           }

@@ -44,15 +44,15 @@ class PharmacistsModel extends Model
 
         if( $search_id!= null  AND  $search_id != "" )
         {   
-            $sql .= " WHERE users_id LIKE '%".$search_id."%'";
-            $sql2 .= " WHERE users_id LIKE '%".$search_id."%'";
+            $sql .= " AND u.users_id LIKE '%".$search_id."%'";
+            $sql2 .= " AND u.users_id LIKE '%".$search_id."%'";
         }
 
         if( $search_item!= null  AND  $search_item != "" )
         {   
-            $and = ($search_id!= null  AND  $search_id != "") ? " AND " : " where" ;
-            $sql .= " $and users_firstname LIKE '%".$search_item."%'";
-            $sql2 .= " $and users_firstname LIKE '%".$search_item."%'";
+            // $and = ($search_id!= null  AND  $search_id != "") ? " AND " : " where" ;
+            $sql .= "   And  U.firstname LIKE '%".$search_item."%'";
+            $sql2 .= " And U.firstname LIKE '%".$search_item."%'";
         }
         if( $limit != null  AND  $limit != "" )
         {   
@@ -76,10 +76,15 @@ class PharmacistsModel extends Model
     }
     public function previewById($id)
     {
-        $results = $this->select(" u.* , ag.area_name  ,  u.group_name ")->Join(" 
-            LEFT JOIN areagroups ag ON  u.area_id = ag.area_id
-            LEFT JOIN usersgroups  us  ON uu.group_id = u.group_id
-        ")->where(" u.id = ? " , $id)->fetch(" users s");
+        // " select u.* , p.pharmacies_id , ag.area_name  from users u 
+        ///Join pharmacies p  ON u.pharmacy_id = p.pharmacies_id
+       // Join areagroups ag  ON ag.area_id = p.area_id WHERE p.pharmacies_id = u.pharmacy_id
+        //";
+        $results = $this->select("  u.* , p.pharmacies_id , ag.area_name , ug.group_name ")->Join(" 
+            LEFT JOIN pharmacies p  ON u.pharmacy_id = p.pharmacies_id
+            LEFT JOIN usersgroups ug  ON ug.group_id = u.group_id
+            LEFT JOIN areagroups ag  ON ag.area_id = p.area_id
+        ")->where(" u.id = ? " , $id)->fetch(" users u");
         return $results;
     }
     public function deleteById($id)
@@ -117,7 +122,7 @@ class PharmacistsModel extends Model
             "lastname"  =>  $lastname,
             "email"  =>  $email,
             "image"     =>  $image,
-            "group_id"  =>  1,
+            "group_id"  =>  3,
             "pharmacy_id"   =>   $this->request->post("pharmacy_id"),
             "logintime" =>  time(),
             "logincode" =>  sha1(rand(0,1000)),

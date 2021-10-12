@@ -120,7 +120,8 @@ class SupervisorsController extends Controller
             ->MatchOldPassword("password" , "newpassword", "confirmpassword")
             ->require("email")
             ->email("email")
-            ->require("pharmacy_id")
+            ->require("area_id")
+            ->exists(["area_id","supervisors" , "id" , $id])
             ->exists(["email","supervisors" , "email" , $this->request->post("email")])
             ->isVerified(["email","supervisors" , "verified" , 0])
             ->valid();

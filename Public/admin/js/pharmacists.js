@@ -340,7 +340,7 @@ function makeTable(results)
                             </td>
                         <td class='action'>
                             <button data-href="${show_data}${results[index].id}" class="btn btn-primary preview "
-                            data-target="#previewmodel" data-toggle= "modal"
+                            data-target="#pharmacistpharmacistpreviewmodel" data-toggle= "modal"
                             ><i class="fas fa-eye"></i></button>
                             <button data-href="${edit_data}${results[index].id}" class="btn btn-primary edit "
                             data-target="#editmodal" data-toggle= "modal"
@@ -416,9 +416,9 @@ function preview(el)
             {
                  
                  loadspinner()
-                  if(document.getElementById("previewmodel"))
+                  if(document.getElementById("#pharmacistpreviewmodel"))
                   {
-                    document.getElementById("previewmodel").remove()
+                    document.getElementById("#pharmacistpreviewmodel").remove()
                    
                   }
                   preview_url  = element.getAttribute("data-href"); 
@@ -430,10 +430,10 @@ function preview(el)
                      removespinner()
                     let html = new DOMParser();
                     let elm =  html.parseFromString(data, "text/html");
-                    let model = elm.getElementById("previewmodel");
+                    let model = elm.getElementById("pharmacistpreviewmodel");
                     let table_div = document.querySelector(".table-center");
                     table_div.insertAdjacentElement("afterend" , model);
-                    $('#previewmodel').modal('show');
+                    $('#pharmacistpreviewmodel').modal('show');
                     })  
                     
                     
