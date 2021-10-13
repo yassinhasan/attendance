@@ -152,9 +152,10 @@ class SupervisorsController extends Controller
           $this->url->header("/");
         }
         $supervisorsmodel = $this->load->model("Supervisors"); 
+        $data['action']     =  toLink("admin/supervisors/save/$id");
         $data['allarea'] = $supervisorsmodel->getAllArea();
         $data['selected'] =  $supervisorsmodel-> getById($id);
-        $data['action']     =  toLink("admin/supervisors/save/$id");
+        $data['update_image']     =  toLink("admin/profile/updateimage/$id");
         $data['custom_add'] = ' Supervisors';
         $supervisorsmodel = $this->load->model("supervisors");
         $data['supervisors_group'] = $supervisorsmodel->getById($id[0]);

@@ -104,14 +104,9 @@ $app->route->addRoute("admin","Admin/Home");
    // profile 
 
    $app->route->addRoute("admin/profile","Admin/Profile");
-   $app->route->addRoute("admin/profile/submit","Admin/Profile@submit");
-   $app->route->addRoute("admin/profile/edit/:id","Admin/Profile@edit","POST");
-   $app->route->addRoute("admin/profile/preview/:id","Admin/Profile@preview","POST");
-   $app->route->addRoute("admin/profile/save/:id","Admin/Profile@save","POST");
-   $app->route->addRoute("admin/profile/delete/:id","Admin/Profile@delete","POST");
-   $app->route->addRoute("admin/profile/realtime","Admin/Profile@realtime" , "POST");
-   $app->route->addRoute("admin/profile/search","Admin/Profile@search" , "POST");
-   $app->route->addRoute("admin/profile/download","Admin/Profile@download" , "POST");
+   $app->route->addRoute("admin/profile/updateprofile/:id","Admin/Profile@updateprofile" , "POST");
+   $app->route->addRoute("admin/profile/updateimage/:id","Admin/Profile@updateimage","POST");
+ 
 
    
 

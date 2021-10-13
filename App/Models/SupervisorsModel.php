@@ -35,10 +35,10 @@ class SupervisorsModel extends Model
 
         $results = [];
         $sql    = " select s.* , ag.area_name from supervisors s 
-                    Join areagroups ag ON s.area_id = ag.area_id
+                    LEFT Join areagroups ag ON s.area_id = ag.area_id
         ";
         $sql2    = " select s.* , ag.area_name from supervisors s 
-        Join areagroups ag ON s.area_id = ag.area_id";
+        LEFT Join areagroups ag ON s.area_id = ag.area_id";
 
         if( $search_id!= null  AND  $search_id != "" )
         {   

@@ -1,3 +1,5 @@
+/* nav image */
+
 .wraper 
 {
    margin: 100px auto;
@@ -33,7 +35,13 @@
     height: 100%; 
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
   
+}
+.upload
+{
+    opacity: 0.5;
+    pointer-events: none;
 }
 .profile-edit
 {
@@ -53,6 +61,26 @@
 .profile-edit form 
 {
     margin: 20px 0;
+}
+.change-password
+{
+    margin: 20px 0 ;
+    cursor: pointer;
+    color: red;
+    font-size: 18px;
+    font-weight: 600;
+}
+.change-password.hide
+{
+    display: none;
+}
+.password-box
+{
+    display: none;
+}
+.password-box.show
+{
+    display: block;
 }
 
 @media (max-width: 768px) {

@@ -94,29 +94,37 @@ class Validator
 
     public function MatchOldPassword($password , $newoassword , $matchedpassword , $message = null)
     {
-        
-        if($this->hasEroor($password))
+        // if old password is matched then 
+        // all new password and confirm must not empty else no change
+     // this mean if empty or not matched
+        $passwordvalue = $this->getValue($password);
+        if(empty($passwordvalue))
+        { 
+           return $this; 
+        }
+        else
         {
-            return $this;
-        }else
-        {
-            $inputvalue = $this->getValue($newoassword);
-            $inputvalue2 = $this->getValue($matchedpassword);
-            if($inputvalue != "" or $inputvalue != null AND $inputvalue2 != "" or $inputvalue2 != null )
+            if($this->hasEroor($password))
             {
-
-                // if( !$this->isInt($newoassword))
-                // {
-                //     $message = $message !== null ? $message : sprintf("sorry new password must be numebr only  %s is not valid",$newoassword);
-                //     $this->message($newoassword,$message);
-                // }
-                $this->require($password);
-                if( $inputvalue !== $inputvalue2)
+                return $this;
+            }else 
                 {
-                    $message = $message !== null ? $message : sprintf("sorry confirm password not match with new password");
-                   $this->message($matchedpassword,$message);
+                    $inputvalue = $this->getValue($newoassword);
+                    $inputvalue2 = $this->getValue($matchedpassword);
+                    $this->require( $newoassword);
+                    $this->require( $matchedpassword);
+                    if($inputvalue != "" or $inputvalue != null AND $inputvalue2 != "" or $inputvalue2 != null )
+                    {
+
+                        $this->require($password);
+                        if( $inputvalue !== $inputvalue2)
+                        {
+                            $message = $message !== null ? $message : sprintf("sorry confirm password not match with new password");
+                        $this->message($matchedpassword,$message);
+                        }
+            }   
                 }
-            }
+
         }
         return $this;
     }

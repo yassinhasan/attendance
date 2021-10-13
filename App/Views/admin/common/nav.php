@@ -40,12 +40,14 @@
       </li> -->
 
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <?= ucfirst( $user->firstname)." ".ucfirst($user->lastname) ?>
+        
+        <a class="nav-link dropdown-toggle profile-name-nav" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="profile-name"><?= ucfirst( $user->firstname)." ".ucfirst($user->lastname) ?></span>
+        <img  src="<?= assets("uploades/images/$user->image") ?>" class="image-nav">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="<?= toLink("admin/profile") ?>">Edit Profile</a>
-          <a class="dropdown-item" href="<?= toLink("admin/password") ?>">Change Password </a>
+          <!-- <a class="dropdown-item" href="<?= toLink("admin/password") ?>">Change Password </a> -->
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?=toLink("admin/logout")  ?>">LOG OUT</a>
         </div>

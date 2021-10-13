@@ -42,85 +42,34 @@ class ProfileController extends Controller
    
       // load all profile
       $data['custom_add'] = ' Profile';
+      $data['allarea'] = $this->load->model("profile")->getAllArea();
       $user = $this->load->model("login")->user();
+      $data['action']     =  toLink("admin/profile/updateimage/$user->id");
+      $data['update']     =  toLink("admin/profile/updateprofile/$user->id");
       $data['user'] = $this->load->model("profile")-> getById($user->id);
       echo  $this->layout->render($this->view->render("admin\profile",$data));
     }
 
-  
-      public function isValid($id = null)
+
+      public function updateimage($id)
       {
-        if($id == null)
-        {
-        return $this->validator
-                        ->require("users_id")
-                        ->exists(["users_id","users"])
-                        ->existsInAnother(["users_id","supervisors_id" , "supervisors"]) // 
-                        ->isInt("users_id")
-                        ->require("firstname")
-                        ->require("lastname")
-                        ->require("email")
-                        ->require("pharmacy_id")
-                        ->email("email")
-                        ->exists(["email","users" , "verified" , 0])
-                        ->existsInAnother(["email","email" , "supervisors"]) 
-                        ->isVerified(["email","users" , "verified" , 0])
-                        ->require("password")
-                        ->image("image")
-                        ->valid();
-        }else
-        {
-            return $this->validator
-            ->require("firstname")
-            ->require("lastname")
-            ->oldPassword(["password" , "users" , "id" , $id])
-            ->MatchOldPassword("password" , "newpassword", "confirmpassword")
-            ->require("email")
-            ->email("email")
-            ->require("pharmacy_id")
-            ->exists(["email","users" , "email" , $this->request->post("email")])
-            ->isVerified(["email","users" , "verified" , 0])
-            ->valid();
-        }
-
-                         
-      }
-
-      public function realtime()
-      {
-        if(! $this->route->isMatchedMethod()){
-          $this->url->header("/");
-        }
-        $profilemodel = $this->load->model("profile");
-        $results =  $profilemodel->getAll();
-
-        $count =  count($results['allwithoutlimit']);
-
-         $this->json['results'] = $results; 
-         $limit = $this->request->post("limit") != null ? intval($this->request->post("limit")) : 5;
-         $this->json['total'] = ceil($count / $limit); 
-        return $this->json();
-      }
-
-
-
-      public function save($id)
-      {
-
         if(! $this->route->isMatchedMethod()){
           $this->url->header("/");
         }
         $id = $id[0];
-       
-        // deleted 
-        if(! $this->isValid($id))
+        
+        if(! $this->isValid())
         {
            $this->json['error'] = $this->validator->getAllErrors();
         }else 
         { 
-            $pharmacistsgroupodel = $this->load->model("profile");
-            if($pharmacistsgroupodel->update($id))
+            $profilemodel = $this->load->model("profile");
+            if($profilemodel->updateimage($id))
              {
+               
+              $image = $profilemodel->getimage($id);
+              $image = $image->image;
+              $this->json['image'] = $image;
                $this->json['suc'] = 'updated succsuffuly';
              }else
              {
@@ -129,6 +78,62 @@ class ProfileController extends Controller
         }
  
         return $this->json();
+      }
+
+      public function isValid($id = null)
+      {
+
+        if($id == null)
+        {
+              return $this->validator
+                        ->image("image")
+                        ->valid();  
+        }else
+        {
+          return $this->validator
+          ->require("firstname")
+          ->require("lastname")
+          ->oldPassword(["password" , "supervisors" , "id" , $id])
+          ->MatchOldPassword("password" , "newpassword", "confirmpassword")
+          ->require("email")
+          ->email("email")
+          ->exists(["email","supervisors" , "email" , $this->request->post("email")])
+          ->valid();
+        }
+            
+      }
+
+      public function updateprofile($id)
+      {
+
+        if(! $this->route->isMatchedMethod()){
+          $this->url->header("/");
+        }
+        $id = $id[0];
+        if(! $this->isValid($id))
+        {
+           $this->json['error'] = $this->validator->getAllErrors();
+        }else 
+        { 
+            $profilemodel = $this->load->model("profile");
+            if($profilemodel->update($id))
+             {
+              $profilemodel = $this->load->model("profile");
+              $name = $profilemodel->getName($id);
+              $firstname = $name->firstname;
+              $lastname = $name->lastname;
+               $this->json['suc'] = 'updated succsuffuly';
+               $this->json['firstname'] = $firstname;
+               $this->json['lastname'] = $lastname;
+             }else
+             {
+               $this->json['nochange'] = "no change in info updated";
+             }
+        }
+ 
+        return $this->json();
 
       }
+
+      
 }
