@@ -17,7 +17,6 @@ class NotaccessController extends Controller
         "admin/css/bootstrap.css.map",
         "admin/css/bootstrap.min.css",
         "admin/css/fontawesome.min.css",
-        "admin/css/notaccess.css",
       ]);
       // all js files      
       $this->html->setJs([
@@ -25,10 +24,13 @@ class NotaccessController extends Controller
         "admin/js/bootstrap.min.js",
         "admin/js/all.min.js",
         "admin/js/fontawesome.min.js",
-        "admin/js/notaccess.js",
 
       ]);
-
+      $image_src = toPublicDirectory('uploades/images/1.png');
+      $type = pathinfo($image_src,PATHINFO_EXTENSION);
+      $file = file_get_contents($image_src);
+      $icon = "data:image/".$type.";base64, ".base64_encode($file);
+      $this->html->setCdn("favicon","<link rel='icon' type='image/png'  href='$icon'>"); 
       echo  $this->userslayout->render($this->view->render("notaccess"));
     }
 

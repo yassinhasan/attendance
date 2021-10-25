@@ -11,6 +11,7 @@ class HeaderController extends Controller
       $data['title'] =  $this->html->getTitle("home");
       $data['css'] =  $this->html->getCss();
       $data['js'] =  $this->html->getJs();
+      $data['favicon'] = $this->html->getCdn('favicon');
       return  $this->view->render("users\common\header",$data);
     }
 }

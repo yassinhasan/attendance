@@ -162,11 +162,21 @@ class Validator
             }
 
         }
-        // else
-        // {
-        //     $image->move();
-        //     $this->file_saved_name_in_db = $image->fileSavedNameInDb();
-        // }
+        return $this;    
+    }
+    public function multipleImages($input,$message= null)
+    {
+         
+        $image = $this->app->request->files($input);
+        if(!$image->noError())
+        {
+            foreach($image->getEroors() as $err)
+            {
+                $message = $message !== null ? $message : $err;
+                $this->message($input,$message);
+            }
+
+        }
         return $this;    
     }
 

@@ -1,0 +1,186 @@
+* 
+{
+    box-sizing: border-box;
+}
+
+a{
+    color: #fff;
+}
+a:hover
+{
+    color: #fff;
+}
+.container
+{
+    margin-top: 100px !important
+}
+.wraper 
+{
+    display:  flex;
+    width: 100%;
+}
+.wraper > div 
+{
+    width: 100%;
+    margin: 30px 20px;
+    height: 400px;
+}
+
+.wraper >div:nth-child(3)
+{
+    background-color: darkgoldenrod;
+    color: #fff;
+}
+
+
+.profile
+{
+    background-color: #495057;
+    position: relative;
+    transition: all .3s ease;
+    transform-style: preserve-3d;  cursor: pointer;
+}
+.profile.active
+{
+    transform: rotateY(180deg);
+}
+.profile .img
+{
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  
+}
+
+.profile .img img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    box-shadow: 0 8px 16px rgba(0 , 0 , 0, 0.5);
+}
+
+.profile .info
+{
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    transform: rotateY(180deg);
+    box-shadow: 0 8px 16px rgba(0 , 0 , 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.profile .info .name
+{
+    font-size: 45px;
+    text-transform: capitalize;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 700;
+}
+.profile .info p:not(:first-child)
+{
+    font-size: 20px;
+    color: #fbfbfb;
+    margin: 2px 0;
+}
+
+@media (max-width: 768px) {
+    .wraper
+    {
+        display: block;
+        
+    }
+    .wraper > div 
+    {
+        display: block;
+        width: 100%;
+        margin: 0 0 60px 0;
+    }
+    .profile .info p
+    {
+        font-size: 10px;
+        color: #fbfbfb;
+        margin: 2px 0;
+    }
+}
+
+@media (min-width: 769px) AND (max-width: 1024px)
+{
+    .wraper 
+    {
+        flex-wrap: wrap;
+    }
+    .wraper > div 
+    {
+        width: 43%;
+        margin-bottom: 100px;height: 500px !important;
+    }   
+}
+
+@media (min-width: 1025px)
+{
+    .wraper > div 
+    {
+    height: 500px !important;
+    }  
+}
+/* insurance */
+
+.insurance
+{
+    position: relative;
+    overflow: hidden;
+    background-color: #009688;
+}
+.insurance .insurance__p
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    font-weight: 700;
+    transition: all 0.5s ease;
+    color: #fff;
+}
+.insurance:hover .insurance__p
+{
+    top: 110px;
+    
+}
+.insurance .insurance__btn_show,.insurance__btn_add
+{
+    position: absolute;
+    left: 50%;
+    top: 110%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+    width: fit-content;
+    padding: 10px;
+}.insurance__btn_add
+{
+    top: 130%;
+    transition: all 1s ease;
+}
+.insurance:hover .insurance__btn_show
+{
+    top: 50%;
+}
+.insurance:hover .insurance__btn_add
+{
+    top: 70%;
+}

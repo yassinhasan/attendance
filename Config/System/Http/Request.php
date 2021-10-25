@@ -1,7 +1,7 @@
 <?php
 namespace System\Http;
 use System\Application;
-use System\Http\UploadFile;
+use System\Http\UploadFiles;
 class Request 
 {
     private $app;
@@ -63,6 +63,16 @@ class Request
         }
 
         $this->file[$input] = new UploadFile($input);
+        return $this->file[$input];
+    }
+    public function files($input)
+    {
+        if(array_key_exists($input,$this->file))
+        {
+            return $this->file[$input];
+        }
+
+        $this->file[$input] = new UploadFiles($input);
         return $this->file[$input];
     }
 }

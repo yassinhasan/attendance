@@ -11,7 +11,7 @@ class HomeController extends Controller
       $user = $this->load->model("login");
       if($user->isLogin("users") OR $user->isLogin("supervisors") )
       {
-         $this->url->header("usershome") ;
+         $this->url->header("users/usershome") ;
       }
       $this->html->setTitle("Home");  
       $this->html->setCss([

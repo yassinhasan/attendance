@@ -6,8 +6,12 @@ $app = Application::getInstance();
 
 // users
 
+// main page if is logged will redirect to /userhome
 $app->route->addRoute("/","Users/Home" ,  "POST");
-$app->route->addRoute("/usershome","Users/Usershome" ,  "POST");
+
+// main page of users
+
+$app->route->addRoute("users/usershome","Users/Usershome" , "post");
    // users ==> login page
    $app->route->addRoute("users/login","Users/Login" , "POST");
    $app->route->addRoute("users/login/submit","Users/Login@submit" , "POST");
@@ -22,6 +26,25 @@ $app->route->addRoute("/usershome","Users/Usershome" ,  "POST");
       $app->route->addRoute("users/verify","Users/Verify" , "GET");   
       $app->route->addRoute("users/verify/submit","Users/Verify@submit" , "GET");   
 
+
+   // profile 
+
+   $app->route->addRoute("users/profile","Users/Profile");
+   $app->route->addRoute("users/profile/updateprofile/:id","Users/Profile@updateprofile" , "POST");
+   $app->route->addRoute("users/profile/updateimage/:id","Users/Profile@updateimage","POST");  
+   
+   
+
+// users/insurance
+$app->route->addRoute("users/insurance","Users/Insurance" , "POST");
+$app->route->addRoute("users/insurance/submit","Users/Insurance@submit");
+$app->route->addRoute("users/insurance/edit/:id","Users/Insurance@edit","POST");
+$app->route->addRoute("users/insurance/save/:id","Users/Insurance@save","POST");
+$app->route->addRoute("users/insurance/delete/:id","Users/Insurance@delete","POST");
+$app->route->addRoute("users/insurance/realtime","Users/Insurance@realtime" , "POST");
+$app->route->addRoute("users/insurance/search","Users/Insurance@search" , "POST");
+$app->route->addRoute("users/insurance/download","Users/Insurance@download" , "POST");
+$app->route->addRoute("users/insurance/preview/:id","Users/Insurance@preview","POST");
 
 // admin
 

@@ -12,7 +12,7 @@ class LoginController extends Controller
         if($loginmodel->isLogin("users") OR $loginmodel->isLogin("supervisors") )
         {
             
-           $this->url->header("usershome") ;
+           $this->url->header("users/usershome") ;
         }
         $this->html->setTitle("login");
 
@@ -77,7 +77,7 @@ class LoginController extends Controller
                     $this->session->set("logincode" , $logeduser->logincode);
                 }
                 $this->json['suc'] = $loginmodel->user();
-                $this->json['redirect'] = toLink("/usershome");
+                $this->json['redirect'] = toLink("users/usershome");
             }
             else
             {

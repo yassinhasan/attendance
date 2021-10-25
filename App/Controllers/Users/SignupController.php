@@ -11,7 +11,7 @@ class SignupController extends Controller
         if($loginmodel->isLogin("users") OR $loginmodel->isLogin("supervisors") )
         {
             
-           $this->url->header("usershome") ;
+           $this->url->header("users/usershome") ;
         }
         $this->html->setTitle("Signup");
         $this->html->setCss([

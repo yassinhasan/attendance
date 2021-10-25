@@ -259,14 +259,4 @@ class SupervisorsController extends Controller
           exit;
       }
 
-
-
-
-
-
-
-
-    
-      
-
 }

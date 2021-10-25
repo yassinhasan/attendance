@@ -53,7 +53,7 @@ class AccessController extends Controller
             
             if(!in_array($this->route->currentUrl() , $user_permessions ) )
             {
-                  $this->url->header("notaccess");
+               $this->url->header("notaccess");
               
             }
         }

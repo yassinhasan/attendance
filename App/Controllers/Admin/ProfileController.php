@@ -46,7 +46,7 @@ class ProfileController extends Controller
       $user = $this->load->model("login")->user();
       $data['action']     =  toLink("admin/profile/updateimage/$user->id");
       $data['update']     =  toLink("admin/profile/updateprofile/$user->id");
-      $data['user'] = $this->load->model("profile")-> getById($user->id);
+      $data['user'] = $this->load->model("profile")-> getById("supervisors",$user->id);
       echo  $this->layout->render($this->view->render("admin\profile",$data));
     }
 
@@ -64,10 +64,10 @@ class ProfileController extends Controller
         }else 
         { 
             $profilemodel = $this->load->model("profile");
-            if($profilemodel->updateimage($id))
+            if($profilemodel->updateimage("supervisors",$id))
              {
                
-              $image = $profilemodel->getimage($id);
+              $image = $profilemodel->getimage("supervisors",$id);
               $image = $image->image;
               $this->json['image'] = $image;
                $this->json['suc'] = 'updated succsuffuly';
@@ -116,10 +116,10 @@ class ProfileController extends Controller
         }else 
         { 
             $profilemodel = $this->load->model("profile");
-            if($profilemodel->update($id))
+            if($profilemodel->update("supervisors", $id))
              {
               $profilemodel = $this->load->model("profile");
-              $name = $profilemodel->getName($id);
+              $name = $profilemodel->getName("supervisors",$id);
               $firstname = $name->firstname;
               $lastname = $name->lastname;
                $this->json['suc'] = 'updated succsuffuly';

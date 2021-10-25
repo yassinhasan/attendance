@@ -4,32 +4,32 @@ use System\Model;
 
 class profileModel extends Model
 {
-    protected $table_name = 'supervisors';
+  
 
 
-    public function getById($id)
+    public function getById($table_name,$id)
     {
         $results = $this->select(" * ")
-        ->where(" id = ? " , $id)->fetch("$this->table_name");
+        ->where(" id = ? " , $id)->fetch("$table_name");
         return $results;
     }
-    public function getimage($id)
+    public function getimage($table_name,$id)
     {
-        $results = $this->select(" image ")->where(" id = ? " , $id)->fetch("$this->table_name");
+        $results = $this->select(" image ")->where(" id = ? " , $id)->fetch("$table_name");
         return $results;
     }
-    public function getName($id)
+    public function getName($table_name,$id)
     {
-        $results = $this->select(" firstname , lastname , email ")->where(" id = ? " , $id)->fetch("$this->table_name");
+        $results = $this->select(" firstname , lastname , email ")->where(" id = ? " , $id)->fetch("$table_name");
         return $results;
     }
-    public function updateimage($id)
+    public function updateimage($table_name,$id)
     {
 
         $image = $this->request->file('image')->move()->fileSavedNameInDb();
         $user = $this->db->data([
             "image"     =>  $image,
-        ])->where(" id = ? " , $id)->update($this->table_name);
+        ])->where(" id = ? " , $id)->update($table_name);
         return $user->rowCount() > 0; 
 
     }
@@ -39,11 +39,11 @@ class profileModel extends Model
        return $result;
     }
 
-    public function update($id)
+    public function update($table_name,$id)
     {
         if($this->request->post("password") == ""  OR $this->request->post("password") ==null )
         {
-            $password  =  $this->getById($id)->password;
+            $password  =  $this->getById($table_name,$id)->password;
             
         }else
         {
@@ -58,7 +58,7 @@ class profileModel extends Model
             "lastname"  =>  $lastname,
             "email"  =>  $email,
             "password"  =>   $password ,
-        ])->where(" id = ? " , $id)->update($this->table_name);
+        ])->where(" id = ? " , $id)->update($table_name);
         return $user->rowCount() > 0; 
         
     }

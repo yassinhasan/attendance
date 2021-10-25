@@ -118,5 +118,18 @@ class UsersModel extends Model
 
         }
 
+        public function getById($id)
+        {
+            $result = $this->select(" u.* , p.pharmacies_id as pharmacy , ag.area_name , s.firstname as supervisor_firstname , s.lastname as supervisor_lastname ")
+            ->from( " users u ")
+            ->join( " JOIN  pharmacies p ON  u.pharmacy_id = p.pharmacies_id" )
+            ->join( " JOIN  areagroups ag ON  ag.area_id = p.area_id " )
+            ->join( " JOIN  supervisors s ON  s.area_id = ag.area_id " )
+            ->where(" u.id = ? " , $id)->fetch();
+            return $result;
+        }
 
-    }
+
+}
+
+    
